@@ -1,0 +1,19 @@
+<section class="login" fxLayoutAlign="center center">
+  <form class="login__form">
+    <div class="login__form--container" fxLayout="column" fxLayoutGap="1rem" class="example-container" [formGroup]="form" (keyup.enter)="onSubmit()">
+      <mat-form-field class="login__container--formField">
+        <mat-label>Wpisz adres email</mat-label>
+        <input matInput placeholder="user@user.com" formControlName="email" required>
+        <mat-error *ngIf="form.controls['email'].invalid">{{getErrorMessage('email')}}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="login__container--formField">
+        <mat-label>Wpisz hasło</mat-label>
+        <input matInput formControlName="password" required type="password">
+        <mat-hint *ngIf="form.controls['password'].value?.length < 6" align="start">Minimum 6 znaków</mat-hint>
+        <mat-hint *ngIf="form.controls['password'].value?.length < 6" align="end">{{form.controls['password'].value?.length || 0}}/6</mat-hint>
+        <mat-error *ngIf="this.form.controls['email'].touched && this.form.controls['email'].value.length === 0">{{getErrorMessage('password')}}</mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="button" (click)="onSubmit()" [disabled]="form.invalid">Zaloguj</button>
+    </div>
+  </form>
+</section>
