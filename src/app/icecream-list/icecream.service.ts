@@ -2,9 +2,6 @@ import {
   Injectable
 } from '@angular/core';
 import {
-  user
-} from '@angular/fire/auth';
-import {
   doc,
   docData,
   Firestore,
@@ -12,21 +9,32 @@ import {
   setDoc
 } from '@angular/fire/firestore';
 import {
+  Store
+} from '@ngrx/store';
+import {
   ToastrService
 } from 'ngx-toastr';
 import {
-  from,
   Observable,
-  of,
   Subject
 } from 'rxjs';
+import {
+  AppState
+} from '../store/app.state';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IcecreamService {
   favouritesSubject = new Subject < Observable < any >> ();
-  constructor(private firestore: Firestore, private toast: ToastrService) {}
+  userId!: string;
+  userInfo$!: Observable < any > ;
+
+  constructor(private firestore: Firestore, private toast: ToastrService, private store: Store < AppState > ) {}
+
+  ngOnInit() {
+
+  }
 
   addIcecream(newIcecream: string) {
     const docRef = doc(this.firestore, 'icecream/wmwFhLjUICxuRm77VfPf');
@@ -34,7 +42,7 @@ export class IcecreamService {
       let docData: any;
       docData = res.data();
       docData.types.push(newIcecream)
-      console.log(docData);
+      // console.log(docData);
       setDoc(docRef, docData);
       this.toast.success(`Dodano pozycję o nazwie "${newIcecream}"`)
     });
@@ -69,13 +77,20 @@ export class IcecreamService {
   }
 
   getFavouritesFromDB() {
-    let mailFromLocalStorage = localStorage.getItem('email');
-    let userData: any;
-    const docRef = doc(this.firestore, 'users/F8qCwjDaIe2xpvcsNukP');
-    (docData(docRef) as Observable < any > ).subscribe((docData) => {
-      userData = docData.users.filter((x: any) => x.email === mailFromLocalStorage);
-      this.favouritesSubject.next(userData[0].favourites);
-    })
+    // let mailFromLocalStorage = localStorage.getItem('email');
+    // let userData: any;
+    // const docRef = doc(this.firestore, 'users/F8qCwjDaIe2xpvcsNukP');
+    // (docData(docRef) as Observable < any > ).subscribe((docData) => {
+    //   userData = docData.users.filter((x: any) => x.email === mailFromLocalStorage);
+    //   this.favouritesSubject.next(userData[0].favourites);
+    // })
+    this.store.select(state => state.auth.loggedUserId).subscribe((id: string) => this.userId = id)
+    const userRef = doc(this.firestore, `users/${this.userId}`);
+    console.log('user id is ' + this.userId)
+    return docData(userRef, {
+      idField: 'id'
+    }) as Observable < any > ;
+
     // let mailFromLocalStorage = localStorage.getItem('email');
     // let userData: any;
     // const docRef = doc(this.firestore, 'users/F8qCwjDaIe2xpvcsNukP');
@@ -85,6 +100,9 @@ export class IcecreamService {
 
     // })
   }
+
+  
+
 
   getUnits() {
 

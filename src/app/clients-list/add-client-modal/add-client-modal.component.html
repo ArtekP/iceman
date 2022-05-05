@@ -2,12 +2,8 @@
 <form [formGroup]="form">
 <div mat-dialog-content fxLayout="column">
   <mat-form-field fxLayoutAlign="center" class="example-form-field" appearance="fill">
-    <mat-label>Imię</mat-label>
+    <mat-label>Imię i nazwisko</mat-label>
     <input matInput type="text" formControlName="name">
-  </mat-form-field>
-  <mat-form-field fxLayoutAlign="center" class="example-form-field" appearance="fill">
-    <mat-label>Nazwisko</mat-label>
-    <input matInput type="text" formControlName="surname">
   </mat-form-field>
   <mat-form-field fxLayoutAlign="center" class="example-form-field" appearance="fill">
     <mat-label>E-mail</mat-label>
@@ -20,7 +16,7 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions fxLayout="row" fxLayoutAlign="center">
-  <button [disabled]="form.invalid" type="submit" (click)="onSubmit(form.controls['name'].value, form.controls['surname'].value, form.controls['email'].value, form.controls['password'].value)" mat-raised-button color="primary" mat-dialog-close>Dodaj</button>
+  <button [disabled]="form.invalid" type="submit" (click)="onSubmit(form.controls['name'].value, form.controls['email'].value, form.controls['password'].value)" mat-raised-button color="primary" mat-dialog-close>Dodaj</button>
   <button type="button" mat-raised-button mat-dialog-close>Anuluj</button>
 </div>
 </form>

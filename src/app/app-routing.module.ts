@@ -11,7 +11,7 @@ import { UserViewComponent } from './user-view/user-view.component';
 const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'user-view', component: UserViewComponent, canActivate: [AuthGuard]},
+  {path: 'user-view', component: UserViewComponent},
   {path: 'admin-view', component: AdminViewComponent, canActivate: [AuthGuard]},
   {path: 'icecream-list', component: IcecreamListComponent},
   {path: 'unit-list', component: UnitListComponent},

@@ -20,17 +20,19 @@ export class IcecreamListComponent implements OnInit {
   value = 'Clear me';
   admin$ = this.store.select(state => state.auth.isAdmin);
 
-  constructor(private httpClient: HttpClient, private store: Store<AppState>, private firestore: Firestore, private cdr: ChangeDetectorRef, public dialog: MatDialog, private icecreamSerivce: IcecreamService) { }
+  constructor(
+    private store: Store<AppState>, 
+    private firestore: Firestore, 
+    private cdr: ChangeDetectorRef, 
+    public dialog: MatDialog, 
+    private icecreamSerivce: IcecreamService)
+  {}
 
   ngOnInit(): void {
     this.icecreamList$ = this.getIcecreamList();
-    this.icecreamSerivce.getFavouritesFromDB();
-    this.icecreamSerivce.favouritesSubject.subscribe((val: any) => {
-      this.favourites$ = of(val)
-    })
+    this.favourites$ = this.icecreamSerivce.getFavouritesFromDB();
     this.cdr.detectChanges();
   }
-
 
   onAddToFavourites(icecream: string) {
     this.icecreamSerivce.addToFavourites(icecream);

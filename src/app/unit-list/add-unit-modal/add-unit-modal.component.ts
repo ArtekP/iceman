@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UnitService } from '../unit.service';
 
@@ -9,18 +9,13 @@ import { UnitService } from '../unit.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./add-unit-modal.component.scss']
 })
-export class AddUnitModalComponent implements OnInit {
+export class AddUnitModalComponent {
   form = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     capacity: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"),])
   })
 
   constructor(private unitService: UnitService) { }
-
-// /\d/.test(form.controls['capacity'].value)
-
-  ngOnInit(): void {
-  }
 
   isValidNumber(value: string) {
     if(value.length ==0) {

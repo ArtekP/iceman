@@ -35,7 +35,6 @@ export class ClientsListComponent implements OnInit {
   onAddUser(email: string, password: string) {
     this.authService.registerUser({
       name: '',
-      surname: '',
       email: email,
       password: password,
       favourites: [],

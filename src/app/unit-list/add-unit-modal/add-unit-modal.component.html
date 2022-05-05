@@ -6,7 +6,7 @@
     <input matInput type="text" formControlName="name">
   </mat-form-field>
   <mat-form-field fxLayoutAlign="center" class="example-form-field" appearance="fill">
-    <mat-label>Pojemność w litrach</mat-label>
+    <mat-label>Pojemność w mililitrach</mat-label>
     <mat-hint *ngIf="isValidNumber(form.controls['capacity'].value)" style="color: red;">*Można wpisać tylko cyfry</mat-hint>
     <input matInput type="text" formControlName="capacity">
   </mat-form-field>

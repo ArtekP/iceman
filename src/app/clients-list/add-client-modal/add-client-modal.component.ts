@@ -11,7 +11,6 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class AddClientModalComponent implements OnInit {
   form = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    surname: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6),])
   })
@@ -20,7 +19,7 @@ export class AddClientModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(name: string, surname: string, email: string, password: string) {
-    this.authService.registerUser({name: name, surname: surname, email: email, password: password, favourites: [], role: 'user'});
+  onSubmit(name: string, email: string, password: string) {
+    this.authService.registerUser({name: name, email: email, password: password, favourites: [], role: 'user'});
   }
 }

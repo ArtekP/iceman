@@ -1,9 +1,9 @@
 <h1 style="text-align: center; margin-bottom: 0">Nasi klienci</h1>
 <div class="container" fxLayoutAlign="center center">
   <ul *ngIf="clientsList$ | async as clients; else loading" fxLayout="column" style="width: 20rem; padding: 0">
-    <li *ngFor="let client of clients[0].users; let index = index" fxLayout="row" fxLayoutAlign="space-between center"
+    <li *ngFor="let client of clients; let index = index" fxLayout="row" fxLayoutAlign="space-between center"
       style="height: 2rem; margin: 0.25rem; width: 100%">
-      <span mat-list-item fxLayoutAlign="flex-start">{{index+1}}. {{ client.name }} {{ client.surname }}:  {{ client.email }}</span>
+      <span mat-list-item fxLayoutAlign="flex-start">{{index+1}}. {{ client.name }}</span>
     </li>
     <div fxLayoutAlign="center center">
       <button mat-raised-button color="primary" style="width: 15rem; margin-top: 1rem;" (click)="openDialog()">

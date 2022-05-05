@@ -42,10 +42,16 @@ export const authReducer = createReducer(initialState,
       isAdmin: false
     }
   }),
-  on(AuthActions.setLoggedUserId, (state) => {
+  on(AuthActions.setLoggedUserId, (state, {uid}) => {
     return {
       ...state,
-      loggedUserId: 
+      loggedUserId: uid,
+    }
+  }),
+  on(AuthActions.clearLoggedUserId, (state) => {
+    return {
+      ...state,
+      loggedUserId: ''
     }
   })
 );

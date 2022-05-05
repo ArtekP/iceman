@@ -29,6 +29,7 @@ import { AddClientModalComponent } from './clients-list/add-client-modal/add-cli
 import { StoreModule } from '@ngrx/store';
 import { AppState } from './store/app.state';
 import { authReducer } from './store/auth';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +43,8 @@ import { authReducer } from './store/auth';
     AddUnitModalComponent,
     AddIcecreamModalComponent,
     ClientsListComponent,
-    AddClientModalComponent
+    AddClientModalComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
