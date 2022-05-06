@@ -5,6 +5,7 @@ import { AuthGuard } from './auth/auth.guards';
 import { LoginComponent } from './auth/login/login.component';
 import { ClientsListComponent } from './clients-list/clients-list.component';
 import { IcecreamListComponent } from './icecream-list/icecream-list.component';
+import { OrderClientComponent } from './order-client/order-client.component';
 import { UnitListComponent } from './unit-list/unit-list.component';
 import { UserViewComponent } from './user-view/user-view.component';
 
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path: 'admin-view', component: AdminViewComponent, canActivate: [AuthGuard]},
   {path: 'icecream-list', component: IcecreamListComponent},
   {path: 'unit-list', component: UnitListComponent},
-  {path: 'clients-list', component: ClientsListComponent}
+  {path: 'clients-list', component: ClientsListComponent},
+  {path: 'order-client', component: OrderClientComponent}
 ];
 
 @NgModule({

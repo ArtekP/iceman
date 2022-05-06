@@ -15,7 +15,7 @@
       <li *ngIf="isAuth$ | async"><a routerLink="/icecream-list">Lody</a></li>
       <li *ngIf="(isAuth$ | async) && (isAdmin$ | async)"><a routerLink="/clients-list">Klienci</a></li>
       <li *ngIf="(isAuth$ | async) && (isAdmin$ | async)"><a routerLink="/unit-list">Pojemniki</a></li>
-      <li *ngIf="isAuth$ | async"><a routerLink="/orders">Zamówienia</a></li>
+      <li *ngIf="isAuth$ | async"><a routerLink="/order-client">Zamówienia</a></li>
       <button mat-raised-button *ngIf="isAuth$ | async"><a style="cursor:pointer; color: black" (click)="onLogout()">Wyloguj się</a></button>
     </ul>
   </div>
