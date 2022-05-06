@@ -1,17 +1,15 @@
 <h1 *ngIf="!(admin$ | async)" style="text-align: center; margin-bottom: 0">Lista ulubionych lodów</h1>
 <div *ngIf="!(admin$ | async)" class="container" fxLayoutAlign="center center">
   <div *ngIf="(favourites$ | async) as favourites; else loading2">
-   <ul *ngIf="favourites.length != 0; else loading2" fxLayout="column" style="width: 20rem; padding: 0">
-     <li *ngFor="let item of favourites['favourites']; let index = index" fxLayout="row" fxLayoutAlign="space-between center"
-       style="height: 2rem; margin: 0.25rem; width: 100%">
+   <ul *ngIf="favourites.length != 0; else loading2" fxLayout="column"  >
+     <li *ngFor="let item of favourites['favourites']; let index = index" fxLayout="row" fxLayoutAlign="space-between center">
        <span mat-list-item fxLayoutAlign="flex-start">{{index+1}}. {{ item | titlecase}}</span>
        <div fxLayoutAlign="flex-end">
-         <mat-form-field class="example-form-field" style="width: 8rem; font-size: 0.5rem"
-           appearance="fill">
+         <mat-form-field class="example-form-field" appearance="fill">
            <mat-label>Ilość</mat-label>
            <input matInput type="number">
          </mat-form-field>
-         <button mat-stroked-button color="warn" fxLayoutAlign="flex-end">
+         <button mat-stroked-button color="warn">
            <mat-icon>add</mat-icon>
            <span>Dodaj do zamówienia</span>
          </button>
@@ -26,16 +24,27 @@
 
 <h1 style="text-align: center; margin-bottom: 0">{{ (admin$ | async) ? 'Lista lodów' : 'Lista wszystkich lodów'}}</h1>
 <div class="container" fxLayoutAlign="center center">
-   <ul *ngIf="icecreamList$ | async as icecream; else loading" fxLayout="column">
-     <li *ngFor="let item of icecream[0].types; let index = index" fxLayout="row" fxLayoutAlign="space-between center">
-       <span mat-list-item fxLayoutAlign="flex-start">{{index+1}}. {{ item | titlecase}}</span>
-       <div  fxLayoutAlign="space-between center">
-         <input *ngIf="!(admin$ | async)" type="number" placeholder="Ilość" style="width: 5rem">
-         <button *ngIf="!(admin$ | async)" mat-stroked-button color="warn">
+   <ul *ngIf="icecreamList$ | async as icecream; else loading" fxLayout="column" style="width: 40rem">
+     <li style="display: flexbox" *ngFor="let item of icecream[0].types; let index = index" fxLayout="row" fxLayoutAlign="space-between center">
+       <span style="align-items: flex-start;" mat-list-item>{{ index+1 }}. {{ item | titlecase}}</span>
+       <div style="align-items: flex-end;" fxLayoutAlign="space-between center">
+        <mat-form-field *ngIf="!(admin$ | async)" appearance="fill">
+          <mat-label>Jednostka</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let unit of (unitList$ | async)[0]['units']" [value]="unit['name']">
+              {{unit['name']}} - {{ unit['capacity']}}ml
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="align-items: flex-end;" *ngIf="!(admin$ | async)" fxLayoutAlign="center" class="example-form-field" appearance="fill">
+          <mat-label>Podaj ilość</mat-label>
+          <input matInput type="number" formControlName="amount">
+        </mat-form-field>
+         <button style="align-items: flex-end;" *ngIf="!(admin$ | async)" mat-stroked-button color="warn">
            <mat-icon>add</mat-icon>
            <span>Dodaj do zamówienia</span>
          </button>
-         <button *ngIf="admin$ | async" class="flex-item" mat-fab color="warn" [title]="'Usuń lody '+item+' z listy dostępnych lodów'" (click)="onDelete(item)">
+         <button style="align-items: flex-end;" *ngIf="admin$ | async" class="flex-item" mat-fab color="warn" [title]="'Usuń lody '+item+' z listy dostępnych lodów'" (click)="onDelete(item)">
            <mat-icon>clear</mat-icon>
          </button>
          <button *ngIf="!(admin$ | async)" class="flex-item" mat-fab color="accent" [title]="'Dodaj lody '+item+' do ulubionych'" (click)="onAddToFavourites(item)">

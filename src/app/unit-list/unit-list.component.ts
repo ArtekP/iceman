@@ -33,19 +33,12 @@ export class UnitListComponent implements OnInit {
   constructor(private httpClient: HttpClient, private unitService: UnitService, private firestore: Firestore, private cdr: ChangeDetectorRef, public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.containerList$ = this.getContainerList();
+    this.containerList$ = this.unitService.getUnitList();
     this.cdr.detectChanges();
   }
 
   openDialog() {
     this.dialog.open(AddUnitModalComponent);
-  }
-
-  getContainerList() {
-    const unitRef = collection(this.firestore, 'units');
-    return collectionData(unitRef, {
-      idField: 'id'
-    }) as Observable < any > ;
   }
 
   onDelete(item: Unit) {

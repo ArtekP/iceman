@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { from, Observable, of } from 'rxjs';
 import { AppState } from '../store/app.state';
+import { UnitService } from '../unit-list/unit.service';
 import { AddIcecreamModalComponent } from './add-icecream-modal/add-icecream-modal.component';
 import { IcecreamService } from './icecream.service';
 
@@ -18,6 +19,7 @@ export class IcecreamListComponent implements OnInit {
   icecreamList$!: Observable<any>;
   favourites$!: Observable<any>;
   value = 'Clear me';
+  unitList$!: Observable<any>;
   admin$ = this.store.select(state => state.auth.isAdmin);
 
   constructor(
@@ -25,11 +27,13 @@ export class IcecreamListComponent implements OnInit {
     private firestore: Firestore,
     private cdr: ChangeDetectorRef,
     public dialog: MatDialog,
+    public unitService: UnitService,
     private icecreamSerivce: IcecreamService)
   {}
 
   ngOnInit(): void {
     this.icecreamList$ = this.getIcecreamList();
+    this.unitList$ = this.unitService.getUnitList();
     this.favourites$ = this.icecreamSerivce.getFavouritesFromDB();
     this.cdr.detectChanges();
   }

@@ -18,7 +18,9 @@ import {
   Observable,
   Subject
 } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+import {
+  AuthService
+} from '../auth/auth.service';
 import {
   AppState
 } from '../store/app.state';
@@ -30,10 +32,9 @@ export class IcecreamService {
   userId!: string;
   userInfo$!: Observable < any > ;
 
-  constructor(private firestore: Firestore, private toast: ToastrService, private store: Store < AppState >, private authService: AuthService ) {}
+  constructor(private firestore: Firestore, private toast: ToastrService, private store: Store < AppState > , private authService: AuthService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   addIcecream(newIcecream: string) {
     const docRef = doc(this.firestore, 'icecream/wmwFhLjUICxuRm77VfPf');
@@ -53,24 +54,27 @@ export class IcecreamService {
       let docData: any;
       docData = res.data();
       let i = docData.types.indexOf(icecream);
-      docData.types.splice(i, 1)
+      docData.types.splice(i, 1);
       setDoc(docRef, docData);
       this.toast.success(`Usunięto pozycję "${icecream}"`)
     });
   }
 
   addToFavourites(icecream: string) {
-    let mailFromLocalStorage = localStorage.getItem('email');
-    const docRef = doc(this.firestore, 'users/F8qCwjDaIe2xpvcsNukP');
-    getDoc(docRef).then(res => {
+    this.userId = this.authService.userId;
+    const userRef = doc(this.firestore, `users/${this.userId}`);
+
+    getDoc(userRef).then(res => {
+      console.log(res)
       let docData: any;
       docData = res.data();
-      let index = docData.users.findIndex((x: any) => x.email == mailFromLocalStorage)
-      if (docData.users[index].favourites.indexOf(icecream) >= 0) {
+      if(docData.favourites.indexOf(icecream) >= 0) {
+        this.toast.info(`Pozycja '${icecream}' już znajduje się na liście ulubionych.`)
         return;
       } else {
-        docData.users[index].favourites = [...docData.users[index].favourites, icecream]
-        setDoc(docRef, docData);
+        docData.favourites = [...docData.favourites, icecream];
+        setDoc(userRef, docData);
+        this.toast.success(`Dodano lody ${icecream} do ulubionych!`)
       }
     });
   }

@@ -53,6 +53,10 @@ export class AuthService {
     private toastr: ToastrService
   ) {}
 
+  getUserData() {
+    
+  }
+
   registerUser(newUser: User) {
     this.createNewUserInDB(newUser).subscribe({
       next: (data) => {

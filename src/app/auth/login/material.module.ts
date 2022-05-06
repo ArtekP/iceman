@@ -9,10 +9,11 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
-  imports: [CommonModule, MatProgressSpinnerModule, MatDialogModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatSidenavModule, MatToolbarModule, MatIconModule, MatListModule],
-  exports: [MatFormFieldModule, MatProgressSpinnerModule, MatDialogModule, MatButtonModule, MatInputModule, MatSidenavModule, MatToolbarModule, MatIconModule, MatListModule]
+  imports: [CommonModule, MatSelectModule, MatProgressSpinnerModule, MatDialogModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatSidenavModule, MatToolbarModule, MatIconModule, MatListModule],
+  exports: [MatFormFieldModule, MatSelectModule, MatProgressSpinnerModule, MatDialogModule, MatButtonModule, MatInputModule, MatSidenavModule, MatToolbarModule, MatIconModule, MatListModule]
 })
 
 export class MaterialModule { }

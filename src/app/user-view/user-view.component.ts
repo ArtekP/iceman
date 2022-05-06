@@ -8,12 +8,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-view.component.scss']
 })
 export class UserViewComponent implements OnInit {
-  userName!: string | null;
+  userName!: string;
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.userName = localStorage.getItem('name');
   }
 
   onIcecreamListClick() {
@@ -21,7 +20,7 @@ export class UserViewComponent implements OnInit {
   }
 
   onOrderListClick() {
-    this.router.navigate(['/container-list'])
+    this.router.navigate(['/order-client'])
   }
 
 }

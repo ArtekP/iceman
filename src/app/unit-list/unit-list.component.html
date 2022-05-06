@@ -1,20 +1,26 @@
-<div  fxLayoutAlign="center center">
-<div class="container" style="width: 30rem" fxLayout="column" fxLayoutAlign="center center">
-  <h1 fxLayoutAlign="center" style="margin-bottom: 0; text-align:center;">Lista dostępnych jednostek</h1>
-  <ul *ngIf="containerList$ | async as units; else loading" style="padding: 0; width: 20rem; list-style: none;">
-    <li *ngFor="let unit of units[0]['units']; let index = index" fxLayoutAlign="space-between center" style="height: 2rem; margin: 0.5rem; width: 100%">
-      <div style="line-height: 2em" mat-list-item>
-        <span class="flex-item">{{ unit.name }}</span>
-        <span style="color: gray; font-size: 0.8rem" class="flex-item">&nbsp;&nbsp;(pojemność: {{unit.capacity}}ml)</span>
-      </div>
-      <button class="flex-item" mat-fab color="warn"(click)="onDelete(unit)" title="Usuń daną jednostkę z listy" style="scale: 0.5; margin-left: 1rem;">
-        <mat-icon>clear</mat-icon>
-      </button>
-    </li>
-  </ul>
-  <button mat-raised-button color="primary" style="width: 15rem;" (click)="openDialog()" fxLayoutAlign="center center">
-    <mat-icon>add</mat-icon>Dodaj nowy pojemnik
-  </button>
-  <ng-template #loading><mat-spinner style="scale: 0.4"></mat-spinner></ng-template>
-</div>
+<div fxLayoutAlign="center center">
+  <div class="container" style="width: 30rem" fxLayout="column" fxLayoutAlign="center center">
+    <h1 fxLayoutAlign="center" style="margin-bottom: 0; text-align:center;">Lista dostępnych jednostek</h1>
+    <ul *ngIf="containerList$ | async as units; else loading" style="padding: 0; width: 20rem; list-style: none;">
+      <li *ngFor="let unit of units[0]['units']; let index = index" fxLayoutAlign="space-between center"
+        style="height: 2rem; margin: 0.5rem; width: 100%">
+        <div style="line-height: 2em" mat-list-item>
+          <span class="flex-item">{{ unit.name }}</span>
+          <span style="color: gray; font-size: 0.8rem" class="flex-item">&nbsp;&nbsp;(pojemność:
+            {{unit.capacity}}ml)</span>
+        </div>
+        <button class="flex-item" mat-fab color="warn" (click)="onDelete(unit)" title="Usuń daną jednostkę z listy"
+          style="scale: 0.5; margin-left: 1rem;">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </li>
+    </ul>
+    <button mat-raised-button color="primary" style="width: 15rem;" (click)="openDialog()"
+      fxLayoutAlign="center center">
+      <mat-icon>add</mat-icon>Dodaj nowy pojemnik
+    </button>
+    <ng-template #loading>
+      <mat-spinner style="scale: 0.4"></mat-spinner>
+    </ng-template>
+  </div>
 </div>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
+import { collection, collectionData, doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 import { Unit } from './unit.model';
 
 @Injectable({
@@ -9,6 +10,13 @@ import { Unit } from './unit.model';
 export class UnitService {
 
   constructor(private toast: ToastrService, private firestore: Firestore) { }
+
+  getUnitList() {
+    const unitRef = collection(this.firestore, 'units');
+    return collectionData(unitRef, {
+      idField: 'id'
+    }) as Observable < any > ;
+  }
 
   addUnit(newUnit: Unit) {
     const docRef = doc(this.firestore, 'units/LpGsBGjbLxaLJqmL698E');
