@@ -2,7 +2,7 @@
 <div *ngIf="!(admin$ | async)" class="container" fxLayoutAlign="center center">
   <div *ngIf="(favourites$ | async) as favourites; else loading2">
    <ul *ngIf="favourites.length != 0; else loading2" fxLayout="column" style="width: 20rem; padding: 0">
-     <li *ngFor="let item of favourites; let index = index" fxLayout="row" fxLayoutAlign="space-between center"
+     <li *ngFor="let item of favourites['favourites']; let index = index" fxLayout="row" fxLayoutAlign="space-between center"
        style="height: 2rem; margin: 0.25rem; width: 100%">
        <span mat-list-item fxLayoutAlign="flex-start">{{index+1}}. {{ item | titlecase}}</span>
        <div fxLayoutAlign="flex-end">
@@ -26,34 +26,27 @@
 
 <h1 style="text-align: center; margin-bottom: 0">{{ (admin$ | async) ? 'Lista lodów' : 'Lista wszystkich lodów'}}</h1>
 <div class="container" fxLayoutAlign="center center">
-   <ul *ngIf="icecreamList$ | async as icecream; else loading" fxLayout="column" style="width: 20rem; padding: 0">
-     <li *ngFor="let item of icecream[0].types; let index = index" fxLayout="row" fxLayoutAlign="space-between center"
-       style="height: 2rem; margin: 0.25rem; width: 100%">
+   <ul *ngIf="icecreamList$ | async as icecream; else loading" fxLayout="column">
+     <li *ngFor="let item of icecream[0].types; let index = index" fxLayout="row" fxLayoutAlign="space-between center">
        <span mat-list-item fxLayoutAlign="flex-start">{{index+1}}. {{ item | titlecase}}</span>
-       <div fxLayoutAlign="flex-end">
-         <mat-form-field *ngIf="!(admin$ | async)" class="example-form-field" style="width: 8rem; font-size: 0.5rem"
-           appearance="fill">
-           <mat-label>Ilość</mat-label>
-           <input matInput type="number">
-         </mat-form-field>
-         <button *ngIf="!(admin$ | async)" mat-stroked-button color="warn" fxLayoutAlign="flex-end">
+       <div  fxLayoutAlign="space-between center">
+         <input *ngIf="!(admin$ | async)" type="number" placeholder="Ilość" style="width: 5rem">
+         <button *ngIf="!(admin$ | async)" mat-stroked-button color="warn">
            <mat-icon>add</mat-icon>
            <span>Dodaj do zamówienia</span>
          </button>
-         <button *ngIf="admin$ | async" class="flex-item" mat-fab color="warn" [title]="'Usuń lody '+item+' z listy dostępnych lodów'" (click)="onDelete(item)"
-           style="scale: 0.5; margin-left: 1rem;">
+         <button *ngIf="admin$ | async" class="flex-item" mat-fab color="warn" [title]="'Usuń lody '+item+' z listy dostępnych lodów'" (click)="onDelete(item)">
            <mat-icon>clear</mat-icon>
          </button>
-         <button *ngIf="!(admin$ | async)" class="flex-item" mat-fab color="accent" [title]="'Dodaj lody '+item+' do ulubionych'" (click)="onAddToFavourites(item)"
-           style="scale: 0.5; margin-left: 1rem;">
+         <button *ngIf="!(admin$ | async)" class="flex-item" mat-fab color="accent" [title]="'Dodaj lody '+item+' do ulubionych'" (click)="onAddToFavourites(item)">
            <mat-icon>add</mat-icon>
          </button>
        </div>
      </li>
-     <div fxLayoutAlign="center center">
-     <button *ngIf="admin$ | async" mat-raised-button color="primary" style="width: 15rem; margin-top: 1rem;" (click)="openDialog()">
-       <mat-icon>add</mat-icon>Dodaj pysznego lodzika
-     </button></div>
    </ul>
  </div>
+ <div fxLayoutAlign="center center">
+  <button *ngIf="admin$ | async" mat-raised-button color="primary" (click)="openDialog()">
+    <mat-icon>add</mat-icon>Dodaj pysznego lodzika
+  </button></div>
  <ng-template #loading><mat-spinner style="scale: 0.4"></mat-spinner></ng-template>

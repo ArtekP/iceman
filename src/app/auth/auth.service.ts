@@ -40,8 +40,8 @@ import {
 @Injectable()
 
 export class AuthService {
+  userId!: string;
   authChange = new Subject < boolean > ();
-  private user!: User | null;
   newUser$!: Observable < User > ;
 
   constructor(
@@ -63,7 +63,6 @@ export class AuthService {
         this.toast.error('Wprowadzono niepoprawne dane.')
       }
     });
-    // POPRAWIC walidacje MAILA!!!!!!!! NIE PRZECHODZI PRZY UWIERZYTELNIANIU
   }
 
   createNewUserInDB(newUser: User) {
@@ -73,9 +72,10 @@ export class AuthService {
   signIn(email: string, password: string) {
     this.login(email, password).subscribe({
       next: (res) => {
+        this.userId = res.user['uid'];
         this.store.dispatch(AuthActions.setAuthenticated());
         this.store.dispatch(AuthActions.setLoggedUserId({
-          uid: res.user['uid']
+          uid: this.userId
         }));
         this.toastr.success('Poprawnie zalogowano do serwisu', '', {
           timeOut: 3000

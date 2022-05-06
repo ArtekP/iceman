@@ -21,10 +21,10 @@ export class IcecreamListComponent implements OnInit {
   admin$ = this.store.select(state => state.auth.isAdmin);
 
   constructor(
-    private store: Store<AppState>, 
-    private firestore: Firestore, 
-    private cdr: ChangeDetectorRef, 
-    public dialog: MatDialog, 
+    private store: Store<AppState>,
+    private firestore: Firestore,
+    private cdr: ChangeDetectorRef,
+    public dialog: MatDialog,
     private icecreamSerivce: IcecreamService)
   {}
 
