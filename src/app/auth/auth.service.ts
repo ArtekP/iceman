@@ -110,6 +110,8 @@ export class AuthService {
       lastOrderDate = docData.lastOrderDate;
       if(lastOrderDate != '') {
         this.store.dispatch(OrderActions.setHasEverOrderedTrue());
+      } else {
+        this.store.dispatch(OrderActions.setHasEverOrderedFalse());
       }
       if(todaysDate == lastOrderDate) {
         this.store.dispatch(OrderActions.setHasOrderedTodayTrue());

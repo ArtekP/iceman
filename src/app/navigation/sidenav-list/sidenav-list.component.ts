@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Output, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { AppState } from 'src/app/store/app.state';
 
 @Component({
   selector: 'app-sidenav-list',
@@ -11,16 +13,14 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class SidenavListComponent implements OnInit {
   @Output() closeSidenav = new EventEmitter<void>();
-  public isAuth = false;
-  public authSubscription!: Subscription;
+  isAuth$!: Observable<boolean>;
+  isAdmin$!: Observable<boolean>;
 
-  constructor(private authService: AuthService, private changeDetectionRef: ChangeDetectorRef, private router: Router) { }
+  constructor(private authService: AuthService, private changeDetectionRef: ChangeDetectorRef, private store: Store<AppState>, private router: Router) { }
 
   ngOnInit() {
-    this.authSubscription = this.authService.authChange.subscribe(authStatus =>{
-      this.isAuth = authStatus;
-      this.changeDetectionRef.detectChanges();
-    })
+    this.isAuth$ = this.store.select(state => state.auth.isAuth);
+    this.isAdmin$ = this.store.select(state => state.auth.isAdmin);
   }
 
   onClose() {

@@ -5,7 +5,7 @@
       <h2 *ngIf="!(hasOrderedToday$ | async) && (hasEverOrdered$ | async)">Czy chcesz <button (click)="onRepeatLastOrder()" style="position: relative; top: -0.25rem;" mat-raised-button
         color="primary">ponowić ostatnie zamówienie</button> ?</h2>
   </div>
-  <div class="user-view__tiles" fxLayout="row" fxLayoutGap="2rem" fxLayoutAlign="center center">
+  <div class="user-view__tiles" fxLayout="row" fxLayout.xs="column" fxLayoutGap="2rem" fxLayoutAlign="center center">
     <a class="user-view__tiles--item" routerLink="/icecream-list">
       <img style="width: 12.5rem; height: 10rem;" src="assets/images/icecream-tile.jpg">
       <h4 style="width: 12.5rem; text-align: center; height: 2.5rem; margin: 0; line-height: 2rem">Lista lodów</h4>

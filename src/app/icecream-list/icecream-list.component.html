@@ -1,11 +1,11 @@
 <h1 *ngIf="!(admin$ | async)" style="text-align: center; margin-bottom: 0">Lista ulubionych lodów</h1>
 <div *ngIf="!(admin$ | async)" class="container" fxLayoutAlign="center center">
   <form [formGroup]="formFav" *ngIf="(favourites$ | async) as favourites; else loading2">
-    <ul *ngIf="favourites.length != 0; else loading2" fxLayout="column">
-      <li *ngFor="let item of favourites['favourites']; let index = index" fxLayout="row"
+    <ul *ngIf="favourites['favourites'].length != 0; else loading2" fxLayout="column" style="max-width: 40rem">
+      <li *ngFor="let item of favourites['favourites']; let index = index" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
         fxLayoutAlign="space-between center">
         <span mat-list-item fxLayoutAlign="flex-start">{{index+1}}. {{ item | titlecase}}</span>
-        <div fxLayoutAlign="flex-end">
+        <div fxLayoutAlign="flex-end" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
           <mat-form-field *ngIf="!(admin$ | async)" appearance="fill">
             <mat-label>Jednostka</mat-label>
             <mat-select formControlName="capacity">
@@ -36,8 +36,8 @@
 
 <h1 style="text-align: center; margin-bottom: 0">{{ (admin$ | async) ? 'Lista lodów' : 'Lista wszystkich lodów'}}</h1>
 <form [formGroup]="form" class="container" fxLayoutAlign="center center">
-  <ul *ngIf="icecreamList$ | async as icecream; else loading" fxLayout="column" style="padding: 0"
-    [ngStyle]="{'width': (admin$ | async) ? '20rem' : '50rem'}">
+  <ul *ngIf="icecreamList$ | async as icecream; else loading" fxLayout="column" style="padding: 0; min-width: 20rem;"
+    [ngStyle]="{'max-width': (admin$ | async) ? '20rem' : '50rem'}">
     <li style="display: flexbox; height: 2rem; margin: 0.25rem" *ngFor="let item of icecream[0].types; let index = index" fxLayout="row"
       fxLayoutAlign="space-between center">
       <span style="align-items: flex-start;" mat-list-item>{{ index+1 }}. {{ item | titlecase}}</span>

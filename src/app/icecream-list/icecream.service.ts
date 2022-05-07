@@ -42,7 +42,6 @@ export class IcecreamService {
       let docData: any;
       docData = res.data();
       docData.types.push(newIcecream)
-      // console.log(docData);
       setDoc(docRef, docData);
       this.toast.success(`Dodano pozycję o nazwie "${newIcecream}"`)
     });
@@ -65,7 +64,6 @@ export class IcecreamService {
     const userRef = doc(this.firestore, `users/${this.userId}`);
 
     getDoc(userRef).then(res => {
-      console.log(res)
       let docData: any;
       docData = res.data();
       if(docData.favourites.indexOf(icecream) >= 0) {

@@ -1,8 +1,8 @@
 <div class="contaienr" fxLayout="column" fxLayoutAlign="center center">
   <h1>{{(hasOrderedToday$ | async) ? 'Zamówienie zostało przyjęte. Zapraszamy jutro!' : 'Obecne zamówienie:'}}</h1>
-  <p *ngIf="!(hasOrderedToday$ | async)">Brak produktów dodanych do zamówienia</p>
+  <p *ngIf="!(hasOrderedToday$ | async) && (order$ | async).length == 0">Brak produktów dodanych do zamówienia</p>
   <ul style="list-style: none;">
-    <li *ngFor="let item of order$ | async; let index = index">{{index+1}}. Lody {{ item.name }} - {{ item.capacity}}
+    <li *ngFor="let item of order$ | async; let index = index">{{index+1}}. Lody {{ item.name | titlecase }} - {{ item.unit.name }} ({{ item.unit.capacity}}ml) 
       {{ item.amount }}szt.</li>
   </ul>
   <button *ngIf="!((order$ | async).length == 0)" type="submit" (click)="onSubmit()" mat-raised-button color="primary"

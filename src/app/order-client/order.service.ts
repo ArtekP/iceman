@@ -34,7 +34,6 @@ export class OrderService {
   constructor(private authService: AuthService, private firestore: Firestore, private toast: ToastrService, private store: Store<AppState>) {}
 
   addToOrders(order: Order) {
-    console.log('sth')
     this.orders.push(order);
     this.toast.info(`Dodano lody ${order.name} do zamówienia`)
   }
