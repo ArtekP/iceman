@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { Observable} from 'rxjs';
 import { OrderService } from '../order-client/order.service';
 import { AppState } from '../store/app.state';
+import { Unit } from '../unit-list/unit.model';
 import { UnitService } from '../unit-list/unit.service';
 import { AddIcecreamModalComponent } from './add-icecream-modal/add-icecream-modal.component';
 import { IcecreamService } from './icecream.service';
@@ -24,9 +25,15 @@ export class IcecreamListComponent implements OnInit {
   hasOrderedToday$!: Observable<boolean>;
   unitList$!: Observable<any>;
   admin$ = this.store.select(state => state.auth.isAdmin);
+  formFav = new FormGroup({
+    name: new FormControl(''),
+    capacity: new FormControl(),
+    amount: new FormControl(0)
+  })
+
   form = new FormGroup({
     name: new FormControl(''),
-    capacity: new FormControl(''),
+    capacity: new FormControl(),
     amount: new FormControl(0)
   })
 
@@ -40,6 +47,7 @@ export class IcecreamListComponent implements OnInit {
     private orderService: OrderService)
   {}
 
+
   ngOnInit(): void {
     this.icecreamList$ = this.getIcecreamList();
     this.unitList$ = this.unitService.getUnitList();
@@ -48,11 +56,11 @@ export class IcecreamListComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  onAddToOrder(name: string, capacity: string, amount: number) {
-    if(capacity === '' || amount === 0) {
+  onAddToOrder(name: string, unit: Unit, amount: number) {
+    if(unit.name === '' || amount === 0) {
       return
     } else {
-      let order = {"name": name, "capacity": capacity, "amount": amount};
+      let order = {"name": name, "unit": unit, "amount": amount};
       this.orderService.addToOrders(order);
     }
   }

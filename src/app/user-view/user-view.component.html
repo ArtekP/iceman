@@ -2,7 +2,7 @@
   <div class="user-view__subheader">
     <h2 style="text-align: center">Dzień dobry, {{ userName }}.</h2> 
     <h2 style="text-align: center">{{ (hasOrderedToday$ | async) ? 'Dziękujemy za złożenie zamówienia!' : ' Nie złożono dzisiaj zamówienia.'}}</h2>
-      <h2 *ngIf="!(hasOrderedToday$ | async) && (hasEverOrdered$ | async)">Czy chcesz <button style="position: relative; top: -0.25rem;" mat-raised-button
+      <h2 *ngIf="!(hasOrderedToday$ | async) && (hasEverOrdered$ | async)">Czy chcesz <button (click)="onRepeatLastOrder()" style="position: relative; top: -0.25rem;" mat-raised-button
         color="primary">ponowić ostatnie zamówienie</button> ?</h2>
   </div>
   <div class="user-view__tiles" fxLayout="row" fxLayoutGap="2rem" fxLayoutAlign="center center">
@@ -16,5 +16,5 @@
     </a>
   </div>
 </div>
-
+<button routerLink="/admin-view">go to admin page</button>
 <ng-template #loader style="position: relative"><mat-spinner style="position: absolute; top: 30%; right: 45%"></mat-spinner></ng-template>

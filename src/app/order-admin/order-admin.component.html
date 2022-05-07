@@ -1,0 +1,6 @@
+<h1>Dzisiejsze zamówienia (klienci)</h1>
+<ul *ngIf="orders$ | async as users" style="list-style: none">
+    <li *ngFor="let user of users"><b>{{ user.name }}</b> : <span *ngFor="let order of user.order">lody {{ order.name | titlecase}}, {{ order.unit.name }} ({{ order.unit.capacity }}ml) - {{ order.amount }}szt.; </span> </li>
+</ul>
+
+<h1>Dzisiejsze zamówienia (produkty)</h1>

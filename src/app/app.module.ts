@@ -32,6 +32,7 @@ import { authReducer } from './store/auth';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { OrderClientComponent } from './order-client/order-client.component';
 import { orderReducer } from './store/order';
+import { OrderAdminComponent } from './order-admin/order-admin.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +48,8 @@ import { orderReducer } from './store/order';
     ClientsListComponent,
     AddClientModalComponent,
     PageNotFoundComponent,
-    OrderClientComponent
+    OrderClientComponent,
+    OrderAdminComponent
   ],
   imports: [
     BrowserModule,

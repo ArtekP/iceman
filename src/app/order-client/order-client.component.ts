@@ -13,12 +13,14 @@ import { OrderService } from './order.service';
 export class OrderClientComponent implements OnInit {
   order$!: Observable<any>;
   hasOrderedToday$!: Observable<boolean>;
+  hasEverOrdered$!: Observable<boolean>;
 
   constructor(private orderService: OrderService, private store: Store<AppState>) { }
 
   ngOnInit(): void {
     this.getOrderList();
     this.hasOrderedToday$ = this.store.select(state => state.order.hasOrderedToday);
+    this.hasEverOrdered$ = this.store.select(state => state.order.hasEverOrdered);
   }
 
   getOrderList() {
@@ -29,5 +31,9 @@ export class OrderClientComponent implements OnInit {
     this.orderService.sendOrderToDB();
     this.order$ = of([]);
     this.store.dispatch(OrderActions.setHasOrderedTodayTrue())
+  }
+
+  onRepeatLastOrder() {
+    this.orderService.repeatLastOrder();
   }
 }

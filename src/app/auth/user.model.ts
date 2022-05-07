@@ -7,4 +7,5 @@ export interface User {
   role: string;
   favourites: string[];
   order: Order[];
+  lastOrderDate: string;
 }

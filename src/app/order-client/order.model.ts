@@ -1,5 +1,7 @@
+import { Unit } from "../unit-list/unit.model";
+
 export interface Order {
     name: string;
-    capacity: string;
+    unit: Unit;
     amount: number;
 }

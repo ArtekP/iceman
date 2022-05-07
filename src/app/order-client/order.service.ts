@@ -6,6 +6,7 @@ import {
   doc,
   Firestore
 } from '@angular/fire/firestore';
+import { Store } from '@ngrx/store';
 import {
   getDoc,
   setDoc
@@ -16,6 +17,8 @@ import {
 import {
   AuthService
 } from '../auth/auth.service';
+import { AppState } from '../store/app.state';
+import { OrderActions } from '../store/order';
 import {
   Order
 } from './order.model';
@@ -28,16 +31,17 @@ export class OrderService {
   userId!: string;
   todaysDate!: Date;
 
-  constructor(private authService: AuthService, private firestore: Firestore, private toast: ToastrService) {}
+  constructor(private authService: AuthService, private firestore: Firestore, private toast: ToastrService, private store: Store<AppState>) {}
 
   addToOrders(order: Order) {
-    this.todaysDate = new Date();
+    console.log('sth')
     this.orders.push(order);
     this.toast.info(`Dodano lody ${order.name} do zamówienia`)
   }
 
   sendOrderToDB() {
-    let formatted = formatDate(this.todaysDate, 'dd/MM/yyyy', 'en-EN')
+    this.todaysDate = new Date();
+    let todaysDateFormatted = formatDate(this.todaysDate, 'dd/MM/yyyy', 'en-EN')
     let currentOrder = this.orders;
     this.userId = this.authService.userId;
     const userRef = doc(this.firestore, `users/${this.userId}`);
@@ -45,9 +49,24 @@ export class OrderService {
       let docData: any;
       docData = res.data();
       docData.order = currentOrder;
-      docData.lastOrderDate = formatted;
+      docData.lastOrderDate = todaysDateFormatted;
       setDoc(userRef, docData);
     });
     this.orders = [];
+  }
+
+  repeatLastOrder() {
+    this.todaysDate = new Date();
+    let todaysDateFormatted = formatDate(this.todaysDate, 'dd/MM/yyyy', 'en-EN')
+    this.userId = this.authService.userId;
+    const userRef = doc(this.firestore, `users/${this.userId}`);
+    getDoc(userRef).then(res => {
+      let docData: any;
+      docData = res.data();
+      docData.lastOrderDate = todaysDateFormatted;
+      setDoc(userRef, docData);
+    });
+    this.store.dispatch(OrderActions.setHasOrderedTodayTrue());
+    this.toast.success('Zamówienie zostało przyjęte!')
   }
 }

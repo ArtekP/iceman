@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { doc, getDoc } from 'firebase/firestore';
 import { Observable, of, Subject } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { OrderService } from '../order-client/order.service';
 import { AppState } from '../store/app.state';
 
 @Component({
@@ -19,7 +20,7 @@ export class UserViewComponent implements OnInit {
   hasOrderedToday$!: Observable<boolean>;
   hasEverOrdered$!: Observable<boolean>;
 
-  constructor(private router: Router, private store: Store<AppState>, private authService: AuthService, private firestore: Firestore) { }
+  constructor(private orderService: OrderService, private router: Router, private store: Store<AppState>, private authService: AuthService, private firestore: Firestore) { }
 
   ngOnInit(): void {
     this.getUserName();
@@ -45,8 +46,8 @@ export class UserViewComponent implements OnInit {
     this.router.navigate(['/order-client'])
   }
 
-  onOrderSameIcrecreamAgain() {
-    
+  onRepeatLastOrder() {
+    this.orderService.repeatLastOrder();
   }
 
 }

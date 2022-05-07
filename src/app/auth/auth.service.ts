@@ -86,7 +86,8 @@ export class AuthService {
         if (res.user['uid'] === 'OH8OXrtaytM80PEIC4jqFWbRtHm1') {
           this.store.dispatch(AuthActions.setAdminTrue());
           this.router.navigate(['/admin-view']);
-        } else {
+        } 
+        else {
           this.router.navigate(['/user-view']);
         }
         this.hasOrderedToday();
