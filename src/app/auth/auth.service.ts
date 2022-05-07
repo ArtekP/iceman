@@ -22,6 +22,7 @@ import {
 import {
   doc,
   Firestore,
+  getDoc,
   setDoc
 } from "@angular/fire/firestore";
 import {
@@ -36,6 +37,8 @@ import {
 import {
   AuthActions
 } from "../store/auth";
+import { formatDate } from "@angular/common";
+import { OrderActions } from "../store/order";
 
 @Injectable()
 
@@ -52,10 +55,6 @@ export class AuthService {
     private store: Store < AppState > ,
     private toastr: ToastrService
   ) {}
-
-  getUserData() {
-    
-  }
 
   registerUser(newUser: User) {
     this.createNewUserInDB(newUser).subscribe({
@@ -90,11 +89,31 @@ export class AuthService {
         } else {
           this.router.navigate(['/user-view']);
         }
+        this.hasOrderedToday();
       },
       error: () => {
         this.toastr.error('Wprowadzono niepoprawne dane', '', {
           timeOut: 3000
         });
+      }
+    });
+  }
+
+  hasOrderedToday() {
+    let todaysDate = formatDate(new Date(), 'dd/MM/yyyy', 'en-EN');
+    let lastOrderDate: string;
+    const userRef = doc(this.firestore, `users/${this.userId}`);
+    getDoc(userRef).then(res => {
+      let docData: any;
+      docData = res.data();
+      lastOrderDate = docData.lastOrderDate;
+      if(lastOrderDate != '') {
+        this.store.dispatch(OrderActions.setHasEverOrderedTrue());
+      }
+      if(todaysDate == lastOrderDate) {
+        this.store.dispatch(OrderActions.setHasOrderedTodayTrue());
+      } else {
+        this.store.dispatch(OrderActions.setHasOrderedTodayFalse());
       }
     });
   }

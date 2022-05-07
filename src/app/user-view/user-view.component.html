@@ -1,6 +1,8 @@
-<div class="user-view" fxLayout="column" fxLayoutAlign="center center">
+<div *ngIf="userName$ | async as userName; else loader" class="user-view" fxLayout="column" fxLayoutAlign="center center">
   <div class="user-view__subheader">
-    <h2>Dzień dobry, {{ userName }}. Nie złożono dzisiaj zamówienia. Czy chcesz <button style="position: relative; top: -0.25rem;" mat-raised-button
+    <h2 style="text-align: center">Dzień dobry, {{ userName }}.</h2> 
+    <h2 style="text-align: center">{{ (hasOrderedToday$ | async) ? 'Dziękujemy za złożenie zamówienia!' : ' Nie złożono dzisiaj zamówienia.'}}</h2>
+      <h2 *ngIf="!(hasOrderedToday$ | async) && (hasEverOrdered$ | async)">Czy chcesz <button style="position: relative; top: -0.25rem;" mat-raised-button
         color="primary">ponowić ostatnie zamówienie</button> ?</h2>
   </div>
   <div class="user-view__tiles" fxLayout="row" fxLayoutGap="2rem" fxLayoutAlign="center center">
@@ -8,9 +10,11 @@
       <img style="width: 12.5rem; height: 10rem;" src="assets/images/icecream-tile.jpg">
       <h4 style="width: 12.5rem; text-align: center; height: 2.5rem; margin: 0; line-height: 2rem">Lista lodów</h4>
     </a>
-    <a class="user-view__tiles--item" routerLink="/unit-list">
+    <a class="user-view__tiles--item" routerLink="/order-client">
       <img style="width: 12.5rem; height: 10rem;" src="assets/images/order-tile.png">
       <h4 style="width: 12.5rem; text-align: center; height: 2.5rem; margin: 0; line-height: 2rem">Zamówienie</h4>
     </a>
   </div>
 </div>
+
+<ng-template #loader style="position: relative"><mat-spinner style="position: absolute; top: 30%; right: 45%"></mat-spinner></ng-template>

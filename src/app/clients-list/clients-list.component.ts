@@ -38,7 +38,8 @@ export class ClientsListComponent implements OnInit {
       email: email,
       password: password,
       favourites: [],
-      role: 'user'
+      role: 'user',
+      order: []
     });
   }
 

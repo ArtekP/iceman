@@ -20,6 +20,6 @@ export class AddClientModalComponent implements OnInit {
   }
 
   onSubmit(name: string, email: string, password: string) {
-    this.authService.registerUser({name: name, email: email, password: password, favourites: [], role: 'user'});
+    this.authService.registerUser({name: name, email: email, password: password, favourites: [], role: 'user', order: []});
   }
 }

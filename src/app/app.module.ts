@@ -31,6 +31,7 @@ import { AppState } from './store/app.state';
 import { authReducer } from './store/auth';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { OrderClientComponent } from './order-client/order-client.component';
+import { orderReducer } from './store/order';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +63,7 @@ import { OrderClientComponent } from './order-client/order-client.component';
     provideFirestore(() => getFirestore()),
     StoreModule.forRoot<AppState>({
       auth: authReducer,
+      order: orderReducer
     }),
   ],
   providers: [AuthService, HttpClient],

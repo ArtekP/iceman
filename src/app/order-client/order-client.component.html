@@ -1,1 +1,9 @@
-<p>order-client works!</p>
+<div class="contaienr" fxLayout="column" fxLayoutAlign="center center">
+  <h1>{{(hasOrderedToday$ | async) ? 'Zamówienie zostało złożone. Zapraszamy jutro!' : 'Obecne zamówienie:'}}</h1>
+  <ul style="list-style: none;">
+    <li *ngFor="let item of order$ | async; let index = index">{{index+1}}. Lody {{ item.name }} - {{ item.capacity}}
+      {{ item.amount }}szt.</li>
+  </ul>
+  <button [disabled]="(order$ | async).length == 0" type="submit" (click)="onSubmit()" mat-raised-button color="primary"
+    mat-dialog-close>Złóż zamówienie</button>
+</div>

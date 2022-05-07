@@ -9,7 +9,7 @@
            <mat-label>Ilość</mat-label>
            <input matInput type="number">
          </mat-form-field>
-         <button mat-stroked-button color="warn">
+         <button [disabled]="hasOrderedToday$ | async" mat-stroked-button color="warn">
            <mat-icon>add</mat-icon>
            <span>Dodaj do zamówienia</span>
          </button>
@@ -23,14 +23,14 @@
 
 
 <h1 style="text-align: center; margin-bottom: 0">{{ (admin$ | async) ? 'Lista lodów' : 'Lista wszystkich lodów'}}</h1>
-<div class="container" fxLayoutAlign="center center">
+<form [formGroup]="form" class="container" fxLayoutAlign="center center">
    <ul *ngIf="icecreamList$ | async as icecream; else loading" fxLayout="column" style="width: 40rem">
      <li style="display: flexbox" *ngFor="let item of icecream[0].types; let index = index" fxLayout="row" fxLayoutAlign="space-between center">
        <span style="align-items: flex-start;" mat-list-item>{{ index+1 }}. {{ item | titlecase}}</span>
        <div style="align-items: flex-end;" fxLayoutAlign="space-between center">
         <mat-form-field *ngIf="!(admin$ | async)" appearance="fill">
           <mat-label>Jednostka</mat-label>
-          <mat-select>
+          <mat-select formControlName="capacity">
             <mat-option *ngFor="let unit of (unitList$ | async)[0]['units']" [value]="unit['name']">
               {{unit['name']}} - {{ unit['capacity']}}ml
             </mat-option>
@@ -40,7 +40,8 @@
           <mat-label>Podaj ilość</mat-label>
           <input matInput type="number" formControlName="amount">
         </mat-form-field>
-         <button style="align-items: flex-end;" *ngIf="!(admin$ | async)" mat-stroked-button color="warn">
+         <button [disabled]="hasOrderedToday$ | async" style="align-items: flex-end;" *ngIf="!(admin$ | async)" mat-stroked-button color="warn" 
+         (click)="onAddToOrder(item, form.controls['capacity'].value, form.controls['amount'].value)">
            <mat-icon>add</mat-icon>
            <span>Dodaj do zamówienia</span>
          </button>
@@ -53,7 +54,7 @@
        </div>
      </li>
    </ul>
- </div>
+ </form>
  <div fxLayoutAlign="center center">
   <button *ngIf="admin$ | async" mat-raised-button color="primary" (click)="openDialog()">
     <mat-icon>add</mat-icon>Dodaj pysznego lodzika
