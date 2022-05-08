@@ -1,12 +1,12 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import { User } from '../auth/user.model';
 import { ClientService } from '../clients-list/client.service';
 
 @Component({
   selector: 'app-order-admin',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './order-admin.component.html',
   styleUrls: ['./order-admin.component.scss']
 })
@@ -25,9 +25,5 @@ export class OrderAdminComponent implements OnInit {
     return this.clientService.getClientsList().pipe(
       map(data => data.filter((user: User) => user.lastOrderDate == formattedTodaysDate))
     )
-  }
-
-  getOrdersByIcecreamName() {
-    
   }
 }

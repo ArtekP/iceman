@@ -18,7 +18,6 @@ import {
   Observable
 } from 'rxjs';
 import { AddUnitModalComponent } from './add-unit-modal/add-unit-modal.component';
-import { Unit } from './unit.model';
 import { UnitService } from './unit.service';
 
 @Component({
@@ -30,7 +29,7 @@ import { UnitService } from './unit.service';
 export class UnitListComponent implements OnInit {
   containerList$!: Observable < any > ;
   unitCollection!: CollectionReference;
-  constructor(private httpClient: HttpClient, private unitService: UnitService, private firestore: Firestore, private cdr: ChangeDetectorRef, public dialog: MatDialog) {}
+  constructor(private unitService: UnitService, private cdr: ChangeDetectorRef, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.containerList$ = this.unitService.getUnitList();
@@ -41,7 +40,7 @@ export class UnitListComponent implements OnInit {
     this.dialog.open(AddUnitModalComponent);
   }
 
-  onDelete(item: Unit) {
-    this.unitService.deleteUnit(item);
+  onDelete(index: number) {
+    this.unitService.deleteUnit(index);
   }
 }

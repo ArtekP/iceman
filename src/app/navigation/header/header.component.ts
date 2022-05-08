@@ -1,9 +1,8 @@
 import { Component, OnInit, EventEmitter, Output, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { StorageMap } from '@ngx-pwa/local-storage';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
-import { AppState } from 'src/app/store/app.state';
 
 @Component({
   selector: 'app-header',
@@ -13,19 +12,17 @@ import { AppState } from 'src/app/store/app.state';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   @Output() public sidenavToggle = new EventEmitter<void>();
-  isAdmin$!: Observable<boolean>;
-  isAuth$!: Observable<boolean>;
+  isAuth$!: any;
   private authSubscription!: Subscription;
 
-  constructor(private authService: AuthService, private router: Router, private store: Store<AppState>) { }
+  constructor(
+    private authService: AuthService, 
+    private router: Router, 
+    private storage: StorageMap,) { }
 
   public ngOnInit() {
-    // this.authSubscription = this.authService.authChange.subscribe(authStatus =>{
-    //   this.isAuth = authStatus;
-    //   this.changeDetectionRef.detectChanges();
-    // })
-    this.isAuth$ = this.store.select(state => state.auth.isAuth);
-    this.isAdmin$ = this.store.select(state => state.auth.isAdmin);
+    // this.isAuth$ = this.store.select(state => state.auth.isAuth);
+    this.isAuth$ = this.storage.watch('isAuth');
   }
 
   public onToggleSidenav() {

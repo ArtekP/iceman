@@ -39,6 +39,7 @@ import {
 } from "../store/auth";
 import { formatDate } from "@angular/common";
 import { OrderActions } from "../store/order";
+import { StorageMap } from "@ngx-pwa/local-storage";
 
 @Injectable()
 
@@ -53,7 +54,8 @@ export class AuthService {
     private firestore: Firestore,
     private toast: ToastrService,
     private store: Store < AppState > ,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private storage: StorageMap
   ) {}
 
   registerUser(newUser: User) {
@@ -75,22 +77,28 @@ export class AuthService {
   signIn(email: string, password: string) {
     this.login(email, password).subscribe({
       next: (res) => {
-        this.userId = res.user['uid'];
+        // this.userId = res.user['uid'];
         this.store.dispatch(AuthActions.setAuthenticated());
+        this.storage.set('isAuth', true, {type: 'boolean'}).subscribe(() => {});
         this.store.dispatch(AuthActions.setLoggedUserId({
-          uid: this.userId
+          uid: res.user['uid']
         }));
+        this.storage.set('uid', res.user['uid'], {type: 'string'}).subscribe(() => {});
+        localStorage.setItem('uid', res.user['uid']);
+        this.userId = localStorage.getItem('uid')!;
         this.toastr.success('Poprawnie zalogowano do serwisu', '', {
           timeOut: 3000
         });
         if (res.user['uid'] === 'OH8OXrtaytM80PEIC4jqFWbRtHm1') {
           this.store.dispatch(AuthActions.setAdminTrue());
+          this.storage.set('isAdmin', true, {type: 'boolean'}).subscribe(() => {});
           this.router.navigate(['/admin-view']);
         } 
         else {
+          this.storage.set('isAdmin', false, { type: 'boolean'});
+          this.hasOrderedToday();
           this.router.navigate(['/user-view']);
         }
-        this.hasOrderedToday();
       },
       error: () => {
         this.toastr.error('Wprowadzono niepoprawne dane', '', {
@@ -105,18 +113,21 @@ export class AuthService {
     let lastOrderDate: string;
     const userRef = doc(this.firestore, `users/${this.userId}`);
     getDoc(userRef).then(res => {
-      let docData: any;
-      docData = res.data();
-      lastOrderDate = docData.lastOrderDate;
+      let docData = res.data()!;
+      lastOrderDate = docData['lastOrderDate'];
       if(lastOrderDate != '') {
         this.store.dispatch(OrderActions.setHasEverOrderedTrue());
+        this.storage.set('hasEverOrdered', true, {type: 'boolean'}).subscribe(() => {});
       } else {
         this.store.dispatch(OrderActions.setHasEverOrderedFalse());
+        this.storage.set('hasEverOrdered', false, {type: 'boolean'}).subscribe(() => {});
       }
       if(todaysDate == lastOrderDate) {
         this.store.dispatch(OrderActions.setHasOrderedTodayTrue());
+        this.storage.set('hasOrderedToday', true, {type: 'boolean'}).subscribe(() => {});
       } else {
         this.store.dispatch(OrderActions.setHasOrderedTodayFalse());
+        this.storage.set('hasOrderedToday', false, {type: 'boolean'}).subscribe(() => {});
       }
     });
   }
@@ -126,10 +137,12 @@ export class AuthService {
   }
 
   logout() {
-    this.router.navigate(['/login']);
     this.store.dispatch(AuthActions.setUnauthenticated());
     this.store.dispatch(AuthActions.setAdminFalse());
     this.store.dispatch(AuthActions.clearLoggedUserId());
+    this.storage.clear().subscribe(() => {});
+    this.router.navigate(['/login']);
+    this.toast.success('Wylogowano pomyślnie. Zapraszamy ponownie!')
     return from(this.fireAuth.signOut());
   }
 }

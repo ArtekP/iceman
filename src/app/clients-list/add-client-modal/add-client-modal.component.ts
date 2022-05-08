@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
 
@@ -8,16 +8,14 @@ import { AuthService } from 'src/app/auth/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./add-client-modal.component.scss']
 })
-export class AddClientModalComponent implements OnInit {
+export class AddClientModalComponent {
   form = new FormGroup({
     name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6),])
   })
-  constructor(private authService: AuthService) { }
 
-  ngOnInit(): void {
-  }
+  constructor(private authService: AuthService) { }
 
   onSubmit(name: string, email: string, password: string) {
     this.authService.registerUser({name: name, email: email, password: password, favourites: [], role: 'user', order: [], lastOrderDate: ''});

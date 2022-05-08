@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { doc, getDoc } from 'firebase/firestore';
 import { Observable, of, Subject } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
@@ -20,7 +21,12 @@ export class UserViewComponent implements OnInit {
   hasOrderedToday$!: Observable<boolean>;
   hasEverOrdered$!: Observable<boolean>;
 
-  constructor(private orderService: OrderService, private router: Router, private store: Store<AppState>, private authService: AuthService, private firestore: Firestore) { }
+  constructor(
+    private orderService: OrderService, 
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private store: Store<AppState>, 
+    private firestore: Firestore) { }
 
   ngOnInit(): void {
     this.getUserName();
@@ -29,13 +35,20 @@ export class UserViewComponent implements OnInit {
   }
 
   getUserName() {
-    this.userId = this.authService.userId;
+    this.userId = localStorage.getItem('uid')!;
     const userRef = doc(this.firestore, `users/${this.userId}`);
     getDoc(userRef).then(res => {
-      let docData: any;
-      docData = res.data();
-      this.userName$.next(docData.name)
+      let docData = res.data()!;
+      this.userName$.next(docData['name'])
     });
+  }
+
+  goToIcecreamList() {
+    this.router.navigate(['icecream-list'], {relativeTo: this.route})
+  }
+
+  goToOrders() {
+    this.router.navigate(['order-client'], {relativeTo: this.route})
   }
 
   onIcecreamListClick() {

@@ -28,7 +28,7 @@ export class ClientsListComponent implements OnInit {
 
   constructor(private authService: AuthService, public dialog: MatDialog, private clientService: ClientService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.clientsList$ = this.getClientsList();
   }
 

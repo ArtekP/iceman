@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { collection, collectionData, Firestore } from '@angular/fire/firestore';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { Observable} from 'rxjs';
 import { OrderService } from '../order-client/order.service';
 import { AppState } from '../store/app.state';
@@ -24,7 +24,9 @@ export class IcecreamListComponent implements OnInit {
   selectedValue!: string;
   hasOrderedToday$!: Observable<boolean>;
   unitList$!: Observable<any>;
-  admin$ = this.store.select(state => state.auth.isAdmin);
+  // admin$ = this.store.select(state => state.auth.isAdmin);
+  admin$ = this.storage.get('isAdmin');
+
   formFav = new FormGroup({
     name: new FormControl(''),
     capacity: new FormControl(),
@@ -38,6 +40,7 @@ export class IcecreamListComponent implements OnInit {
   })
 
   constructor(
+    private storage: StorageMap,
     private store: Store<AppState>,
     private firestore: Firestore,
     private cdr: ChangeDetectorRef,

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IcecreamService } from '../icecream.service';
 
@@ -8,15 +8,12 @@ import { IcecreamService } from '../icecream.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./add-icecream-modal.component.scss']
 })
-export class AddIcecreamModalComponent implements OnInit {
+export class AddIcecreamModalComponent {
   form = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
   })
 
   constructor(private icecreamService: IcecreamService) { }
-
-  ngOnInit(): void {
-  }
 
   onSubmit(name: string) {
     this.icecreamService.addIcecream(name);

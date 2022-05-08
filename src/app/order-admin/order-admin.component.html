@@ -1,16 +1,19 @@
 <div class="container" fxLayout="column" fxLayoutAlign="center center">
   <h1>Dzisiejsze zamówienia (klienci)</h1>
-  <ng-container *ngIf="(orders$ | async).length > 0; else noorders">
-    <ul *ngIf="orders$ | async as users" style="list-style: none; max-width: 40rem">
-      <li *ngFor="let user of users"><b>{{ user.name }}</b> : <span *ngFor="let order of user.order"
-          style="display: block">Lody
-          {{ order.name | lowercase}}, {{ order.unit.name }} ({{ order.unit.capacity }}ml) - {{ order.amount }}szt.;
-        </span></li>
-    </ul>
+  <ng-container *ngIf="orders$ | async as users">
+    <ng-container *ngIf="users.length > 0; else noorders">
+      <ul style="list-style: none; max-width: 40rem">
+        <li *ngFor="let user of users" style="padding-bottom: 0.5rem"><b>{{ user.name }}</b> <span
+            *ngFor="let order of user.order" style="display: block">Lody
+            {{ order.name | lowercase}}, {{ order.unit.name }} ({{ order.unit.capacity }}ml) - {{ order.amount }}szt.;
+          </span></li>
+      </ul>
+    </ng-container>
   </ng-container>
   <h1>Dzisiejsze zamówienia (produkty)</h1>
+
 </div>
 
 <ng-template #noorders>
-  <p>Brak zamówień na dziś</p>
+  <p>Brak zamówień na dziś.</p>
 </ng-template>

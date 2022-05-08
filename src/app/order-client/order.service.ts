@@ -29,7 +29,7 @@ import {
 export class OrderService {
   orders: Order[] = [];
   userId!: string;
-  todaysDate!: Date;
+  todaysDate = new Date();
 
   constructor(private authService: AuthService, private firestore: Firestore, private toast: ToastrService, private store: Store<AppState>) {}
 
@@ -39,30 +39,26 @@ export class OrderService {
   }
 
   sendOrderToDB() {
-    this.todaysDate = new Date();
     let todaysDateFormatted = formatDate(this.todaysDate, 'dd/MM/yyyy', 'en-EN')
     let currentOrder = this.orders;
-    this.userId = this.authService.userId;
+    this.userId = localStorage.getItem('uid')!;
     const userRef = doc(this.firestore, `users/${this.userId}`);
     getDoc(userRef).then(res => {
-      let docData: any;
-      docData = res.data();
-      docData.order = currentOrder;
-      docData.lastOrderDate = todaysDateFormatted;
+      let docData = res.data()!;
+      docData['order'] = currentOrder;
+      docData['lastOrderDate'] = todaysDateFormatted;
       setDoc(userRef, docData);
     });
     this.orders = [];
   }
 
   repeatLastOrder() {
-    this.todaysDate = new Date();
     let todaysDateFormatted = formatDate(this.todaysDate, 'dd/MM/yyyy', 'en-EN')
-    this.userId = this.authService.userId;
+    this.userId = localStorage.getItem('uid')!;
     const userRef = doc(this.firestore, `users/${this.userId}`);
     getDoc(userRef).then(res => {
-      let docData: any;
-      docData = res.data();
-      docData.lastOrderDate = todaysDateFormatted;
+      let docData = res.data()!;
+      docData['lastOrderDate'] = todaysDateFormatted;
       setDoc(userRef, docData);
     });
     this.store.dispatch(OrderActions.setHasOrderedTodayTrue());

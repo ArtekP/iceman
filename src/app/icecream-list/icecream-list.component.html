@@ -9,9 +9,11 @@
           <mat-form-field *ngIf="!(admin$ | async)" appearance="fill">
             <mat-label>Jednostka</mat-label>
             <mat-select formControlName="capacity">
-              <mat-option *ngFor="let unit of (unitList$ | async)[0]['units']" [value]="unit">
+              <ng-container *ngIf="unitList$ | async as units">
+              <mat-option *ngFor="let unit of units[0]['units']" [value]="unit">
                 {{unit['name']}} - {{ unit['capacity']}}ml
               </mat-option>
+            </ng-container>
             </mat-select>
           </mat-form-field>
           <mat-form-field style="align-items: flex-end;" *ngIf="!(admin$ | async)" fxLayoutAlign="center"
@@ -45,9 +47,10 @@
         <mat-form-field *ngIf="!(admin$ | async)" appearance="fill">
           <mat-label>Jednostka</mat-label>
           <mat-select formControlName="capacity">
-            <mat-option *ngFor="let unit of (unitList$ | async)[0]['units']" [value]="unit">
+            <ng-container *ngIf="unitList$ | async as units">
+            <mat-option *ngFor="let unit of units[0]['units']" [value]="unit">
               {{unit['name']}} - {{ unit['capacity']}}ml
-            </mat-option>
+            </mat-option></ng-container>
           </mat-select>
         </mat-form-field>
         <mat-form-field style="align-items: flex-end;" *ngIf="!(admin$ | async)" fxLayoutAlign="center"

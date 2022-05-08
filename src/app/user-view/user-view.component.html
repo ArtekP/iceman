@@ -6,15 +6,15 @@
         color="primary">ponowić ostatnie zamówienie</button> ?</h2>
   </div>
   <div class="user-view__tiles" fxLayout="row" fxLayout.xs="column" fxLayoutGap="2rem" fxLayoutAlign="center center">
-    <a class="user-view__tiles--item" routerLink="/icecream-list">
+    <a class="user-view__tiles--item" (click)="goToIcecreamList()">
       <img style="width: 12.5rem; height: 10rem;" src="assets/images/icecream-tile.jpg">
       <h4 style="width: 12.5rem; text-align: center; height: 2.5rem; margin: 0; line-height: 2rem">Lista lodów</h4>
     </a>
-    <a class="user-view__tiles--item" routerLink="/order-client">
+    <a class="user-view__tiles--item" (click)="goToOrders()">
       <img style="width: 12.5rem; height: 10rem;" src="assets/images/order-tile.png">
       <h4 style="width: 12.5rem; text-align: center; height: 2.5rem; margin: 0; line-height: 2rem">Zamówienie</h4>
     </a>
   </div>
 </div>
-<button routerLink="/admin-view">go to admin page</button>
 <ng-template #loader style="position: relative"><mat-spinner style="position: absolute; top: 30%; right: 45%"></mat-spinner></ng-template>
+<router-outlet></router-outlet>

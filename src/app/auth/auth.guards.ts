@@ -10,6 +10,7 @@ import {
 import {
   Store
 } from "@ngrx/store";
+import { StorageMap } from "@ngx-pwa/local-storage";
 import {
   map
 } from "rxjs";
@@ -22,10 +23,17 @@ import {
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private store: Store < AppState > , private router: Router) {}
+  constructor(private store: Store < AppState > , private router: Router, private storage: StorageMap) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.store.select(state => state.auth.isAuth)
+    return this.storage.get('isAuth').pipe(map(res => {
+      if(res) {
+        return true;
+      } else {
+        this.router.navigate(['login'])
+        return false;
+      }
+    }))
   }
   // if (res.user['uid'] === 'OH8OXrtaytM80PEIC4jqFWbRtHm1') {
   //   this.store.dispatch(AuthActions.setAdminTrue());
