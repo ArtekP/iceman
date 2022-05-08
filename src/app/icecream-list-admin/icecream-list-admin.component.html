@@ -1,0 +1,19 @@
+<h1 class="align-center">Lista lodów</h1>
+<div fxLayout="column" fxLayoutAlign="center center">
+  <ul *ngIf="icecreamList$ | async as icecream; else loading" fxLayout="column">
+    <li *ngFor="let item of icecream[0].types; let index = index" fxLayoutAlign="space-between center" style="height: 2.5rem">
+      <span>{{ index + 1}}. {{ item | titlecase}}</span>
+      <button class="scale flex-item" mat-fab color="warn"
+        [title]="'Usuń lody '+item+' z listy dostępnych lodów'" (click)="onDelete(item)">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </li>
+  </ul>
+</div>
+<div fxLayoutAlign="center center" class="padding-bottom">
+  <button mat-raised-button color="primary" (click)="openDialog()">
+    <mat-icon>add</mat-icon>Dodaj pysznego lodzika
+  </button></div>
+<ng-template #loading>
+  <mat-spinner class="scale"></mat-spinner>
+</ng-template>

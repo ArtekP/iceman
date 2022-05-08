@@ -30,5 +30,4 @@ export class AddUnitModalComponent {
   onSubmit(name: string, capacity: string) {
     this.unitService.addUnit({name: name, capacity: capacity});
   }
-
 }

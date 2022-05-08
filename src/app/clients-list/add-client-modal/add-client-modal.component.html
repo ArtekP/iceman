@@ -1,22 +1,24 @@
-<h1 mat-dialog-title style="text-align: center;">Dodawanie nowego klienta</h1>
-<form [formGroup]="form">
-<div mat-dialog-content fxLayout="column">
-  <mat-form-field fxLayoutAlign="center" class="example-form-field" appearance="fill">
-    <mat-label>Imię i nazwisko</mat-label>
-    <input matInput type="text" formControlName="name">
-  </mat-form-field>
-  <mat-form-field fxLayoutAlign="center" class="example-form-field" appearance="fill">
-    <mat-label>E-mail</mat-label>
-    <input matInput type="text" formControlName="email">
-  </mat-form-field>
-  <mat-form-field fxLayoutAlign="center" class="example-form-field" appearance="fill">
-    <mat-label>Hasło</mat-label>
-    <mat-hint>*Hasło minimum 6 znaków</mat-hint>
-    <input matInput type="text" formControlName="password" type="password">
-  </mat-form-field>
-</div>
-<div mat-dialog-actions fxLayout="row" fxLayoutAlign="center">
-  <button [disabled]="form.invalid" type="submit" (click)="onSubmit(form.controls['name'].value, form.controls['email'].value, form.controls['password'].value)" mat-raised-button color="primary" mat-dialog-close>Dodaj</button>
-  <button type="button" mat-raised-button mat-dialog-close>Anuluj</button>
-</div>
+<h1 mat-dialog-title class="align-center">Dodawanie nowego klienta</h1>
+<form [formGroup]="form" class="form">
+  <div mat-dialog-content fxLayout="column">
+    <mat-form-field fxLayoutAlign="center" appearance="fill">
+      <mat-label>Imię i nazwisko</mat-label>
+      <input matInput type="text" formControlName="name">
+    </mat-form-field>
+    <mat-form-field fxLayoutAlign="center" appearance="fill">
+      <mat-label>E-mail</mat-label>
+      <input matInput type="text" formControlName="email">
+    </mat-form-field>
+    <mat-form-field fxLayoutAlign="center" appearance="fill">
+      <mat-label>Hasło</mat-label>
+      <mat-hint>*Hasło minimum 6 znaków</mat-hint>
+      <input matInput type="text" formControlName="password" type="password">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="center">
+    <button [disabled]="form.invalid" type="submit"
+      (click)="onSubmit(form.controls['name'].value, form.controls['email'].value, form.controls['password'].value)"
+      mat-raised-button color="primary" mat-dialog-close>Dodaj</button>
+    <button type="button" mat-raised-button mat-dialog-close>Anuluj</button>
+  </div>
 </form>

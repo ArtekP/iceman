@@ -1,14 +1,15 @@
-<h1 mat-dialog-title style="text-align: center;">Dodawanie nowego loda</h1>
-<form [formGroup]="form">
-<div mat-dialog-content fxLayout="column">
-  <mat-form-field fxLayoutAlign="center" class="example-form-field" appearance="fill">
-    <mat-label>Podaj nazwę</mat-label>
-    <input matInput type="text" formControlName="name">
-    <mat-hint>Minimum 3 znaki</mat-hint>
-  </mat-form-field>
-</div>
-<div mat-dialog-actions fxLayout="row" fxLayoutAlign="center">
-  <button [disabled]="form.invalid" type="submit" (click)="onSubmit(form.controls['name'].value)" mat-raised-button color="primary" mat-dialog-close>Dodaj</button>
-  <button type="button" mat-raised-button mat-dialog-close>Anuluj</button>
-</div>
+<h1 mat-dialog-title style="text-align: center;">Dodawanie nowego lodzika</h1>
+<form [formGroup]="form" style="padding: 1rem;">
+  <div mat-dialog-content fxLayout="column">
+    <mat-form-field fxLayoutAlign="center" class="example-form-field" appearance="fill">
+      <mat-label>Podaj nazwę</mat-label>
+      <input matInput type="text" formControlName="name">
+      <mat-hint>Minimum 3 znaki</mat-hint>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="center" style="padding-top: 1rem;">
+    <button [disabled]="form.invalid" type="submit" (click)="onSubmit(form.controls['name'].value)" mat-raised-button
+      color="primary" mat-dialog-close>Dodaj</button>
+    <button type="button" mat-raised-button mat-dialog-close>Anuluj</button>
+  </div>
 </form>

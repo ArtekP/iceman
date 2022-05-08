@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './auth/login/login.component';
-import { MaterialModule } from './auth/login/material.module';
+import { MaterialModule } from './auth/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HeaderComponent } from './navigation/header/header.component';
@@ -33,6 +33,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { OrderClientComponent } from './order-client/order-client.component';
 import { orderReducer } from './store/order';
 import { OrderAdminComponent } from './order-admin/order-admin.component';
+import { IcecreamListAdminComponent } from './icecream-list-admin/icecream-list-admin.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +50,8 @@ import { OrderAdminComponent } from './order-admin/order-admin.component';
     AddClientModalComponent,
     PageNotFoundComponent,
     OrderClientComponent,
-    OrderAdminComponent
+    OrderAdminComponent,
+    IcecreamListAdminComponent
   ],
   imports: [
     BrowserModule,

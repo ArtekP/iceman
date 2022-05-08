@@ -18,7 +18,7 @@ import { AppState } from '../store/app.state';
 export class UserViewComponent implements OnInit {
   userId!: string;
   userName$ = new Subject<any>();
-  hasOrderedToday$!: Observable<boolean>;
+  hasOrderedToday$!: any;
   hasEverOrdered$!: Observable<boolean>;
 
   constructor(
@@ -26,12 +26,14 @@ export class UserViewComponent implements OnInit {
     private route: ActivatedRoute, 
     private router: Router, 
     private store: Store<AppState>, 
-    private firestore: Firestore) { }
+    private firestore: Firestore,
+    private storage: StorageMap) { }
 
   ngOnInit(): void {
     this.getUserName();
     this.hasEverOrdered$ = this.store.select(state => state.order.hasEverOrdered);
-    this.hasOrderedToday$ = this.store.select(state => state.order.hasOrderedToday);
+    // this.hasOrderedToday$ = this.store.select(state => state.order.hasOrderedToday);
+    this.hasOrderedToday$ = this.storage.watch('hasOrderedToday');
   }
 
   getUserName() {

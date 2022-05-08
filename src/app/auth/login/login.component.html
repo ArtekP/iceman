@@ -1,12 +1,12 @@
 <section class="login" fxLayoutAlign="center center">
   <form class="login__form">
-    <div class="login__form--container" fxLayout="column" fxLayoutGap="1rem" class="example-container" [formGroup]="form" (keyup.enter)="onSubmit()">
-      <mat-form-field class="login__container--formField">
+    <div fxLayout="column" fxLayoutGap="1rem" [formGroup]="form" (keyup.enter)="onSubmit()">
+      <mat-form-field>
         <mat-label>Wpisz adres email</mat-label>
         <input matInput placeholder="user@user.com" formControlName="email" required>
         <mat-error *ngIf="form.controls['email'].invalid">{{getErrorMessage('email')}}</mat-error>
       </mat-form-field>
-      <mat-form-field class="login__container--formField">
+      <mat-form-field>
         <mat-label>Wpisz hasło</mat-label>
         <input matInput formControlName="password" required type="password">
         <mat-hint *ngIf="form.controls['password'].value?.length < 6" align="start">Minimum 6 znaków</mat-hint>

@@ -1,47 +1,27 @@
-<div class="user-view" fxLayout="column" fxLayoutAlign="center center">
-  <div class="user-view__subheader" style="text-align: center">
-    <h2>Witaj w aplikacji Lodowej Krainy.</h2>
-    <p>By przejść do listy lodów, klientów, jednostek czy zamówień, kliknij w jeden z poniższych kafelków.</p>
+<div style="margin: 4rem;"></div>
+<div fxLayout="column" fxLayoutAlign="center center">
+  <div class="align-center container">
+    <h2>Witaj w aplikacji Lodowej Krainy</h2>
+    <p>By przejść do listy lodów, klientów, jednostek czy zamówień, kliknij w jeden z poniższych kafelków. Wybrana kategoria pojawi się poniżej.</p>
   </div>
 
-  <div class="user-view__tiles" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="2rem" fxLayoutAlign="center center">
-    <a class="user-view__tiles--item" (click)="goToIcecreamList()" style="      height: 12.5rem;
-      width: 12.5rem;
-      border: 1px solid black;
-      box-shadow: 1px 1px 5px 0px rgba(66, 68, 90, 1);
-      cursor: pointer;">
-      <img style="width: 12.5rem; height: 10rem;" src="assets/images/icecream-tile.jpg">
-      <h4 style="width: 12.5rem; text-align: center; height: 2.5rem; margin: 0; line-height: 2rem">Lista lodów</h4>
+  <div class="padding-bottom" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="2rem" fxLayoutAlign="center center">
+    <a class="tile" (click)="goToIcecreamList()">
+      <img class="tile__img" src="assets/images/icecream-tile.jpg">
+      <h4 class="tile__title">Lista lodów</h4>
     </a>
-    <a class="user-view__tiles--item" (click)="goToUnits()" style="      height: 12.5rem;
-      width: 12.5rem;
-      border: 1px solid black;
-      box-shadow: 1px 1px 5px 0px rgba(66, 68, 90, 1);
-      cursor: pointer;">
-      <img style="width: 12.5rem; height: 10rem;" src="assets/images/units-tile.jpg">
-      <h4 style="width: 12.5rem; text-align: center; height: 2.5rem; margin: 0; line-height: 2rem">Lista jednostek</h4>
+    <a class="tile" (click)="goToUnits()">
+      <img class="tile__img" src="assets/images/units-tile.jpg">
+      <h4 class="tile__title">Lista jednostek</h4>
     </a>
-    <a class="user-view__tiles--item" (click)="goToClients()" style="      height: 12.5rem;
-      width: 12.5rem;
-      border: 1px solid black;
-      box-shadow: 1px 1px 5px 0px rgba(66, 68, 90, 1);
-      cursor: pointer;">
-      <img style="width: 12.5rem; height: 10rem;" src="assets/images/users-tile.jpg">
-      <h4 style="width: 12.5rem; text-align: center; height: 2.5rem; margin: 0; line-height: 2rem">Lista klientów</h4>
+    <a class="tile" (click)="goToClients()">
+      <img class="tile__img" src="assets/images/users-tile.jpg">
+      <h4 class="tile__title">Lista klientów</h4>
     </a>
-    <a class="user-view__tiles--item" (click)="goToOrders()" style="      height: 12.5rem;
-      width: 12.5rem;
-      border: 1px solid black;
-      box-shadow: 1px 1px 5px 0px rgba(66, 68, 90, 1);
-      cursor: pointer;">
-      <img style="width: 12.5rem; height: 10rem;" src="assets/images/order-tile.png">
-      <h4 style="width: 12.5rem; text-align: center; height: 2.5rem; margin: 0; line-height: 2rem">Zamówienie</h4>
+    <a class="tile" (click)="goToOrders()">
+      <img class="tile__img" src="assets/images/order-tile.png">
+      <h4 class="tile__title">Zamówienie</h4>
     </a>
   </div>
 </div>
-<router-outlet></router-outlet>
-
-
-<!-- u admina wyswietla sie non stop brak zlozomnych zamowien!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<!-- nawigacja boczna -->
-<!-- kafelki cienie -->
+<router-outlet id="target"></router-outlet>

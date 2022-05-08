@@ -77,7 +77,6 @@ export class AuthService {
   signIn(email: string, password: string) {
     this.login(email, password).subscribe({
       next: (res) => {
-        // this.userId = res.user['uid'];
         this.store.dispatch(AuthActions.setAuthenticated());
         this.storage.set('isAuth', true, {type: 'boolean'}).subscribe(() => {});
         this.store.dispatch(AuthActions.setLoggedUserId({

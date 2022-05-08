@@ -3,13 +3,12 @@ import { collection, collectionData, Firestore } from '@angular/fire/firestore';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { StorageMap } from '@ngx-pwa/local-storage';
+import { ToastrService } from 'ngx-toastr';
 import { Observable} from 'rxjs';
 import { OrderService } from '../order-client/order.service';
 import { AppState } from '../store/app.state';
 import { Unit } from '../unit-list/unit.model';
 import { UnitService } from '../unit-list/unit.service';
-import { AddIcecreamModalComponent } from './add-icecream-modal/add-icecream-modal.component';
 import { IcecreamService } from './icecream.service';
 
 @Component({
@@ -24,8 +23,6 @@ export class IcecreamListComponent implements OnInit {
   selectedValue!: string;
   hasOrderedToday$!: Observable<boolean>;
   unitList$!: Observable<any>;
-  // admin$ = this.store.select(state => state.auth.isAdmin);
-  admin$ = this.storage.get('isAdmin');
 
   formFav = new FormGroup({
     name: new FormControl(''),
@@ -40,14 +37,14 @@ export class IcecreamListComponent implements OnInit {
   })
 
   constructor(
-    private storage: StorageMap,
     private store: Store<AppState>,
     private firestore: Firestore,
     private cdr: ChangeDetectorRef,
     public dialog: MatDialog,
     public unitService: UnitService,
     private icecreamSerivce: IcecreamService,
-    private orderService: OrderService)
+    private orderService: OrderService,
+    private toast: ToastrService)
   {}
 
 
@@ -60,7 +57,8 @@ export class IcecreamListComponent implements OnInit {
   }
 
   onAddToOrder(name: string, unit: Unit, amount: number) {
-    if(unit.name === '' || amount === 0) {
+    if(unit.name == '' || amount === 0) {
+      this.toast.error('Wybierz jednostkę z listy oraz podaj ilość!');
       return
     } else {
       let order = {"name": name, "unit": unit, "amount": amount};
@@ -70,14 +68,6 @@ export class IcecreamListComponent implements OnInit {
 
   onAddToFavourites(icecream: string) {
     this.icecreamSerivce.addToFavourites(icecream);
-  }
-
-  openDialog() {
-    this.dialog.open(AddIcecreamModalComponent);
-  }
-
-  onDelete(icecream: string) {
-    this.icecreamSerivce.deleteIcecream(icecream);
   }
 
   getIcecreamList() {

@@ -1,18 +1,21 @@
-<h1 mat-dialog-title style="text-align: center;">Dodawanie nowego pojemnika</h1>
-<form [formGroup]="form">
-<div mat-dialog-content fxLayout="column">
-  <mat-form-field fxLayoutAlign="center" class="example-form-field" appearance="fill">
-    <mat-label>Nazwa</mat-label>
-    <input matInput type="text" formControlName="name">
-  </mat-form-field>
-  <mat-form-field fxLayoutAlign="center" class="example-form-field" appearance="fill">
-    <mat-label>Pojemność w mililitrach</mat-label>
-    <mat-hint *ngIf="isValidNumber(form.controls['capacity'].value)" style="color: red;">*Można wpisać tylko cyfry</mat-hint>
-    <input matInput type="text" formControlName="capacity">
-  </mat-form-field>
-</div>
-<div mat-dialog-actions fxLayout="row" fxLayoutAlign="center">
-  <button [disabled]="form.invalid" type="submit" (click)="onSubmit(form.controls['name'].value, form.controls['capacity'].value)" mat-raised-button color="primary" mat-dialog-close>Dodaj</button>
-  <button type="button" mat-raised-button mat-dialog-close>Anuluj</button>
-</div>
+<h1 mat-dialog-title class="align-center">Dodawanie nowego pojemnika</h1>
+<form [formGroup]="form" class="form">
+  <div mat-dialog-content fxLayout="column">
+    <mat-form-field fxLayoutAlign="center" class="example-form-field" appearance="fill">
+      <mat-label>Nazwa</mat-label>
+      <input matInput type="text" formControlName="name">
+    </mat-form-field>
+    <mat-form-field fxLayoutAlign="center" class="example-form-field" appearance="fill">
+      <mat-label>Pojemność w mililitrach</mat-label>
+      <mat-hint *ngIf="isValidNumber(form.controls['capacity'].value)" class="hint">*Można wpisać tylko cyfry
+      </mat-hint>
+      <input matInput type="text" formControlName="capacity">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="center">
+    <button [disabled]="form.invalid" type="submit"
+      (click)="onSubmit(form.controls['name'].value, form.controls['capacity'].value)" mat-raised-button color="primary"
+      mat-dialog-close>Dodaj</button>
+    <button type="button" mat-raised-button mat-dialog-close>Anuluj</button>
+  </div>
 </form>

@@ -7,6 +7,7 @@ import {
   Firestore
 } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import {
   getDoc,
   setDoc
@@ -14,9 +15,6 @@ import {
 import {
   ToastrService
 } from 'ngx-toastr';
-import {
-  AuthService
-} from '../auth/auth.service';
 import { AppState } from '../store/app.state';
 import { OrderActions } from '../store/order';
 import {
@@ -31,7 +29,7 @@ export class OrderService {
   userId!: string;
   todaysDate = new Date();
 
-  constructor(private authService: AuthService, private firestore: Firestore, private toast: ToastrService, private store: Store<AppState>) {}
+  constructor(private storage: StorageMap, private firestore: Firestore, private toast: ToastrService, private store: Store<AppState>) {}
 
   addToOrders(order: Order) {
     this.orders.push(order);
@@ -62,6 +60,7 @@ export class OrderService {
       setDoc(userRef, docData);
     });
     this.store.dispatch(OrderActions.setHasOrderedTodayTrue());
+    this.storage.set('hasOrderedToday', true).subscribe(() => {});
     this.toast.success('Zamówienie zostało przyjęte!')
   }
 }

@@ -5,10 +5,9 @@
     &--item {
       height: 12.5rem;
       width: 12.5rem;
-      border: 1px solid black;
+      border-radius: 1rem;
       box-shadow: 1px 1px 5px 0px rgba(66, 68, 90, 1);
       cursor: pointer;
-
     }
   }
 }

@@ -1,5 +1,5 @@
-<div class="container" fxLayout="column" fxLayoutAlign="center center">
-  <h1>Dzisiejsze zamówienia (klienci)</h1>
+<div style="padding-bottom: 3rem;" class="container" fxLayout="column" fxLayoutAlign="center center">
+  <h1 class="align-center">Dzisiejsze zamówienia (klienci)</h1>
   <ng-container *ngIf="orders$ | async as users">
     <ng-container *ngIf="users.length > 0; else noorders">
       <ul style="list-style: none; max-width: 40rem">
@@ -9,9 +9,16 @@
           </span></li>
       </ul>
     </ng-container>
+    <h1 style="text-align: center;">Dzisiejsze zamówienia (produkty)</h1>
+    <ng-container *ngIf="users.length > 0; else noorders">
+      <ul style="list-style: none; max-width: 40rem">
+        <li *ngFor="let order of ordersByIcecreamName$ | async">
+          Lody
+            {{ order.name | lowercase}}, {{ order.unit.name }} ({{ order.unit.capacity }}ml) - {{ order.amount }}szt.;
+          </li>
+      </ul>
+    </ng-container>
   </ng-container>
-  <h1>Dzisiejsze zamówienia (produkty)</h1>
-
 </div>
 
 <ng-template #noorders>

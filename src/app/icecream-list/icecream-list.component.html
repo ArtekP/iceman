@@ -1,56 +1,96 @@
-<h1 *ngIf="!(admin$ | async)" style="text-align: center; margin-bottom: 0">Lista ulubionych lodów</h1>
-<div *ngIf="!(admin$ | async)" class="container" fxLayoutAlign="center center">
-  <form [formGroup]="formFav" *ngIf="(favourites$ | async) as favourites; else loading2">
-    <ul *ngIf="favourites['favourites'].length != 0; else loading2" fxLayout="column" style="max-width: 40rem">
-      <li *ngFor="let item of favourites['favourites']; let index = index" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
-        fxLayoutAlign="space-between center">
-        <span mat-list-item fxLayoutAlign="flex-start">{{index+1}}. {{ item | titlecase}}</span>
-        <div fxLayoutAlign="flex-end" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
-          <mat-form-field *ngIf="!(admin$ | async)" appearance="fill">
-            <mat-label>Jednostka</mat-label>
-            <mat-select formControlName="capacity">
-              <ng-container *ngIf="unitList$ | async as units">
-              <mat-option *ngFor="let unit of units[0]['units']" [value]="unit">
-                {{unit['name']}} - {{ unit['capacity']}}ml
-              </mat-option>
-            </ng-container>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field style="align-items: flex-end;" *ngIf="!(admin$ | async)" fxLayoutAlign="center"
-            class="example-form-field" appearance="fill">
-            <mat-label>Podaj ilość</mat-label>
-            <input matInput type="number" formControlName="amount">
-          </mat-form-field>
-          <button [disabled]="hasOrderedToday$ | async" style="align-items: flex-end;" *ngIf="!(admin$ | async)"
-          mat-stroked-button color="warn"
-          (click)="onAddToOrder(item, formFav.controls['capacity'].value, formFav.controls['amount'].value)">
-          <mat-icon>add</mat-icon>
-          <span>Dodaj do zamówienia</span>
-        </button>
-        </div>
-      </li>
-    </ul>
+<ng-container style="max-width: 40rem;">
+  <h1 style="text-align: center; margin-bottom: 2rem">Lista ulubionych lodów</h1>
+  <form *ngIf="(favourites$ | async) as favourites; else loading2" [formGroup]="formFav" class="align-center"
+    fxLayout="row wrap" fxLayoutAlign="center center">
+    <mat-card *ngFor="let item of favourites['favourites']; let index = index"
+      style="width: 20rem; margin: 1rem; background-color: rgba(128, 128, 128, 0.032); border-radius: 1rem;">
+      <mat-card-title><span>&#11088;</span>Lody {{ item | lowercase }}</mat-card-title>
+      <mat-card-subtitle>Wybierz jednostkę oraz podaj ilość, by dodać pozycję do zamówienia.</mat-card-subtitle>
+      <mat-form-field fxLayoutAlign="center" appearance="fill" style="margin-bottom: 0.2rem">
+        <mat-label>Jednostka</mat-label>
+        <mat-select formControlName="capacity">
+          <ng-container *ngIf="unitList$ | async as units">
+            <mat-option *ngFor="let unit of units[0]['units']" [value]="unit">
+              {{unit['name']}} - {{ unit['capacity']}}ml
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxLayoutAlign="center" class="example-form-field" appearance="fill" style="margin-bottom: 0.2rem">
+        <mat-label>Podaj ilość</mat-label>
+        <input matInput type="number" formControlName="amount">
+      </mat-form-field>
+
+      <mat-card-actions>
+        <button mat-button [disabled]="hasOrderedToday$ | async"
+          (click)="onAddToOrder(item, formFav.controls['capacity'].value, formFav.controls['amount'].value)">Dodaj do
+          zamówienia</button>
+      </mat-card-actions>
+    </mat-card>
   </form>
-</div>
-<ng-template #loading2>Brak ulubionych pozycji.</ng-template>
+  <ng-template #loading2>
+    <p fxLayoutAlign="center center">Brak ulubionych pozycji.</p>
+  </ng-template>
+</ng-container>
+
+<ng-container style="max-width: 40rem;">
+  <h1 style="text-align: center; margin-bottom: 2rem">Lista wszystkich lodów</h1>
+  <form *ngIf="icecreamList$ | async as icecream; else loading" [formGroup]="form" class="align-center"
+    fxLayout="row wrap" fxLayoutAlign="center center">
+    <mat-card *ngFor="let item of icecream[0].types; let index = index"
+      style="width: 20rem; margin: 1rem; background-color: rgba(128, 128, 128, 0.032); border-radius: 1rem;">
+      <mat-card-title>Lody {{ item | lowercase }}</mat-card-title>
+      <mat-card-subtitle>Wybierz jednostkę oraz podaj ilość, by dodać pozycję do zamówienia.</mat-card-subtitle>
+      <mat-form-field fxLayoutAlign="center" appearance="fill" style="margin-bottom: 0.2rem">
+        <mat-label>Jednostka</mat-label>
+        <mat-select formControlName="capacity">
+          <ng-container *ngIf="unitList$ | async as units">
+            <mat-option *ngFor="let unit of units[0]['units']" [value]="unit">
+              {{unit['name']}} - {{ unit['capacity']}}ml
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxLayoutAlign="center" class="example-form-field" appearance="fill" style="margin-bottom: 0.2rem">
+        <mat-label>Podaj ilość</mat-label>
+        <input matInput type="number" formControlName="amount">
+      </mat-form-field>
+
+      <mat-card-actions>
+        <button mat-button [disabled]="hasOrderedToday$ | async"
+          (click)="onAddToOrder(item, form.controls['capacity'].value, form.controls['amount'].value)">Dodaj do
+          zamówienia</button>
+        <button mat-button (click)="onAddToFavourites(item)"><span>&#11088;</span> Dodaj do
+          ulubionych <span>&#11088;</span></button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+  <ng-template #loading>
+    <p fxLayoutAlign="center center">Brak pozycji na liście lodów. Skontaktuj się z lodziarzem, by ustalić przyczynę.
+    </p>
+  </ng-template>
+</ng-container>
 
 
 
-<h1 style="text-align: center; margin-bottom: 0">{{ (admin$ | async) ? 'Lista lodów' : 'Lista wszystkich lodów'}}</h1>
+<!-- <h1 style="text-align: center; margin-bottom: 0">{{ (admin$ | async) ? 'Lista lodów' : 'Lista wszystkich lodów'}}</h1>
 <form [formGroup]="form" class="container" fxLayoutAlign="center center">
   <ul *ngIf="icecreamList$ | async as icecream; else loading" fxLayout="column" style="padding: 0; min-width: 20rem;"
     [ngStyle]="{'max-width': (admin$ | async) ? '20rem' : '50rem'}">
-    <li style="display: flexbox; height: 2rem; margin: 0.25rem" *ngFor="let item of icecream[0].types; let index = index" fxLayout="row"
-      fxLayoutAlign="space-between center">
+    <li style="display: flexbox; height: 2rem; margin: 0.25rem"
+      *ngFor="let item of icecream[0].types; let index = index" fxLayout="row" fxLayoutAlign="space-between center">
       <span style="align-items: flex-start;" mat-list-item>{{ index+1 }}. {{ item | titlecase}}</span>
       <div style="align-items: flex-end;" fxLayoutAlign="space-between center">
         <mat-form-field *ngIf="!(admin$ | async)" appearance="fill">
           <mat-label>Jednostka</mat-label>
           <mat-select formControlName="capacity">
             <ng-container *ngIf="unitList$ | async as units">
-            <mat-option *ngFor="let unit of units[0]['units']" [value]="unit">
-              {{unit['name']}} - {{ unit['capacity']}}ml
-            </mat-option></ng-container>
+              <mat-option *ngFor="let unit of units[0]['units']" [value]="unit">
+                {{unit['name']}} - {{ unit['capacity']}}ml
+              </mat-option>
+            </ng-container>
           </mat-select>
         </mat-form-field>
         <mat-form-field style="align-items: flex-end;" *ngIf="!(admin$ | async)" fxLayoutAlign="center"
@@ -82,4 +122,42 @@
   </button></div>
 <ng-template #loading>
   <mat-spinner style="scale: 0.4"></mat-spinner>
-</ng-template>
+</ng-template> -->
+
+<!-- <h1 *ngIf="!(admin$ | async)" style="text-align: center; margin-bottom: 0">Lista ulubionych lodów</h1>
+<div *ngIf="!(admin$ | async)" class="container" fxLayoutAlign="center center">
+  <form [formGroup]="formFav" *ngIf="(favourites$ | async) as favourites; else loading2">
+    <ul *ngIf="favourites['favourites'].length != 0; else loading2" fxLayout="column" style="max-width: 40rem">
+      <li *ngFor="let item of favourites['favourites']; let index = index" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
+        fxLayoutAlign="space-between center">
+        <span mat-list-item fxLayoutAlign="flex-start">{{index+1}}. {{ item | titlecase}}</span>
+        <div fxLayoutAlign="flex-end" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+          <mat-form-field *ngIf="!(admin$ | async)" appearance="fill">
+            <mat-label>Jednostka</mat-label>
+            <mat-select formControlName="capacity">
+              <ng-container *ngIf="unitList$ | async as units">
+              <mat-option *ngFor="let unit of units[0]['units']" [value]="unit">
+                {{unit['name']}} - {{ unit['capacity']}}ml
+              </mat-option>
+            </ng-container>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field style="align-items: flex-end;" *ngIf="!(admin$ | async)" fxLayoutAlign="center"
+            class="example-form-field" appearance="fill">
+            <mat-label>Podaj ilość</mat-label>
+            <input matInput type="number" formControlName="amount">
+          </mat-form-field>
+          
+          <button [disabled]="hasOrderedToday$ | async" style="align-items: flex-end;" *ngIf="!(admin$ | async)"
+          mat-stroked-button color="warn"
+          (click)="onAddToOrder(item, formFav.controls['capacity'].value, formFav.controls['amount'].value)">
+          <mat-icon>add</mat-icon>
+          <span>Dodaj do zamówienia</span>
+        
+        </button>
+        </div>
+      </li>
+    </ul>
+  </form>
+</div>
+<ng-template #loading2>Brak ulubionych pozycji.</ng-template> -->

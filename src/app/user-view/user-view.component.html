@@ -1,20 +1,30 @@
-<div *ngIf="userName$ | async as userName; else loader" class="user-view" fxLayout="column" fxLayoutAlign="center center">
-  <div class="user-view__subheader">
-    <h2 style="text-align: center">Dzień dobry, {{ userName }}.</h2> 
-    <h2 style="text-align: center">{{ (hasOrderedToday$ | async) ? 'Dziękujemy za złożenie zamówienia!' : ' Nie złożono dzisiaj zamówienia.'}}</h2>
-      <h2 *ngIf="!(hasOrderedToday$ | async) && (hasEverOrdered$ | async)">Czy chcesz <button (click)="onRepeatLastOrder()" style="position: relative; top: -0.25rem;" mat-raised-button
+<div style="margin: 4rem;"></div>
+<div *ngIf="userName$ | async as userName; else loader" class="user-view padding-bottom" fxLayout="column"
+  fxLayoutAlign="center center">
+  <div class="user-view__subheader align-center">
+    <h2>Dzień dobry, {{ userName }}.</h2>
+    <h2>
+      {{ (hasOrderedToday$ | async) ? 'Dziękujemy za złożenie zamówienia!' : ' Nie złożono dzisiaj zamówienia.'}}</h2>
+    <h2 *ngIf="!(hasOrderedToday$ | async) && (hasEverOrdered$ | async)">Czy chcesz <button
+        (click)="onRepeatLastOrder()" style="position: relative; top: -0.25rem;" mat-raised-button
         color="primary">ponowić ostatnie zamówienie</button> ?</h2>
+    <p>By przejść do listy lodów lub do zamówienia, kliknij odpowiedni kafelek. Wybrana kategoria pojawi się poniżej.
+    </p>
   </div>
   <div class="user-view__tiles" fxLayout="row" fxLayout.xs="column" fxLayoutGap="2rem" fxLayoutAlign="center center">
     <a class="user-view__tiles--item" (click)="goToIcecreamList()">
-      <img style="width: 12.5rem; height: 10rem;" src="assets/images/icecream-tile.jpg">
+      <img style="width: 12.5rem; height: 10rem; border-radius: 1rem 1rem 0 0" src="assets/images/icecream-tile.jpg">
       <h4 style="width: 12.5rem; text-align: center; height: 2.5rem; margin: 0; line-height: 2rem">Lista lodów</h4>
     </a>
     <a class="user-view__tiles--item" (click)="goToOrders()">
-      <img style="width: 12.5rem; height: 10rem;" src="assets/images/order-tile.png">
+      <img style="width: 12.5rem; height: 10rem; border-radius: 1rem 1rem 0 0" src="assets/images/order-tile.png">
       <h4 style="width: 12.5rem; text-align: center; height: 2.5rem; margin: 0; line-height: 2rem">Zamówienie</h4>
     </a>
   </div>
 </div>
-<ng-template #loader style="position: relative"><mat-spinner style="position: absolute; top: 30%; right: 45%"></mat-spinner></ng-template>
-<router-outlet></router-outlet>
+
+<ng-template #loader style="position: relative">
+  <mat-spinner style="position: absolute; top: 30%; right: 45%"></mat-spinner>
+</ng-template>
+
+<router-outlet id="target"></router-outlet>

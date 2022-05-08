@@ -1,9 +1,8 @@
-import { Component, EventEmitter, Output, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { ViewportScroller } from '@angular/common';
+import { Component, EventEmitter, Output, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { AuthService } from 'src/app/auth/auth.service';
-import { AppState } from 'src/app/store/app.state';
 
 @Component({
   selector: 'app-sidenav-list',
@@ -13,14 +12,50 @@ import { AppState } from 'src/app/store/app.state';
 })
 export class SidenavListComponent implements OnInit {
   @Output() closeSidenav = new EventEmitter<void>();
-  isAuth$!: Observable<boolean>;
-  isAdmin$!: Observable<boolean>;
+  isAuth$!: any;
+  isAdmin$!: any;
 
-  constructor(private authService: AuthService, private store: Store<AppState>, private router: Router) { }
+  constructor(private scroller: ViewportScroller,private authService: AuthService, private storage: StorageMap, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.isAuth$ = this.store.select(state => state.auth.isAuth);
-    this.isAdmin$ = this.store.select(state => state.auth.isAdmin);
+    this.isAuth$ = this.storage.watch('isAuth');
+    this.isAdmin$ = this.storage.watch('isAdmin');
+  }
+  
+  goToClients() {
+    this.onClose();
+    this.router.navigate(['admin-view/clients-list'], {relativeTo: this.route});
+    this.scroller.scrollToAnchor("target");
+  }
+
+  goToUnits() {
+    this.onClose();
+    this.router.navigate(['admin-view/unit-list'], {relativeTo: this.route});
+    this.scroller.scrollToAnchor("target");
+  }
+
+  goToOrdersUser() {
+    this.onClose();
+    this.router.navigate(['user-view/order-client'], {relativeTo: this.route});
+    this.scroller.scrollToAnchor("target");
+  }
+
+  goToOrdersAdmin() {
+    this.onClose();
+    this.router.navigate(['admin-view/order-admin'], {relativeTo: this.route});
+    this.scroller.scrollToAnchor("target");
+  }
+
+  goToIcecreamListAdmin() {
+    this.onClose();
+    this.router.navigate(['admin-view/icecream-list-admin'], {relativeTo: this.route});
+    this.scroller.scrollToAnchor("target");
+  }
+
+  goToIcecreamListUser() {
+    this.onClose();
+    this.router.navigate(['user-view/icecream-list'], {relativeTo: this.route});
+    this.scroller.scrollToAnchor("target");
   }
 
   onClose() {

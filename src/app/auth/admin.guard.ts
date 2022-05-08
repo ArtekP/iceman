@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { CanActivate, Router} from '@angular/router';
 import { StorageMap } from '@ngx-pwa/local-storage';
-import { map, Observable } from 'rxjs';
-import { AppState } from '../store/app.state';
+import { ToastrService } from 'ngx-toastr';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminGuard implements CanActivate {
-  constructor(private store: Store < AppState > , private router: Router, private storage: StorageMap) {}
+  constructor(private router: Router, private storage: StorageMap, private toast: ToastrService) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.storage.get('isAdmin').pipe(map(res => {
-      if(res) {
-        return true;
-      } else {
-        this.router.navigate(['user-view']);
-        return false
-      }
-    }))
-    
+  canActivate() {
+    return this.storage.get('isAdmin').pipe(
+      map(res => {
+        if(res) {
+          return true;
+        } else {
+          this.toast.error('Musisz posiadać uprawnienia admina!');
+          this.router.navigate(['user-view']);
+          return false
+        }
+      })
+    )
   }
-  
 }

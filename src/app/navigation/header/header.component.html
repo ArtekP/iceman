@@ -1,4 +1,4 @@
-<mat-toolbar fxLayout="row" fxLayoutAlign="flex-start center" color="primary">
+<div style="position: relative"><mat-toolbar fxLayout="row" fxLayoutAlign="flex-start center" color="primary" class="fixed">
   <div fxHide.gt-xs fxLayoutAlign="flex-start">
     <button mat-icon-button (click)="onToggleSidenav()">
       <mat-icon>menu</mat-icon>
@@ -12,11 +12,8 @@
   <div fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>
     <ul fxLayout fxLayoutGap="1rem" class="navigation-items">
       <li *ngIf="!(isAuth$ | async)"><a routerLink="/login">Logowanie</a></li>
-      <!-- <li *ngIf="isAuth$ | async"><a routerLink="/icecream-list">Lody</a></li>
-      <li *ngIf="(isAuth$ | async) && (isAdmin$ | async)"><a routerLink="/unit-list">Pojemniki</a></li>
-      <li *ngIf="(isAuth$ | async) && !(isAdmin$ | async)"><a routerLink="/order-client">Zamówienia</a></li>
-      <li *ngIf="(isAuth$ | async) && (isAdmin$ | async)"><a routerLink="/order-admin">Zamówienia</a></li> -->
       <button mat-raised-button *ngIf="isAuth$ | async"><a style="cursor:pointer; color: black" (click)="onLogout()">Wyloguj się</a></button>
     </ul>
   </div>
 </mat-toolbar>
+</div>

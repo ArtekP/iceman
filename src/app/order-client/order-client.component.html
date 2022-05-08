@@ -1,4 +1,4 @@
-<div class="container" fxLayout="column" fxLayoutAlign="center center">
+<div class="container padding-bottom" fxLayout="column" fxLayoutAlign="center center">
   <h1 style="text-align: center">{{(hasOrderedToday$ | async) ? 'Zamówienie zostało przyjęte. Zapraszamy jutro!' : 'Obecne zamówienie:'}}</h1>
   <p *ngIf="!(hasOrderedToday$ | async) && (order$ | async).length == 0">Brak produktów dodanych do zamówienia</p>
   <ul style="list-style: none;">

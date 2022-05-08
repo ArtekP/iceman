@@ -2,40 +2,33 @@ import {
   Injectable
 } from '@angular/core';
 import {
-  ActivatedRouteSnapshot,
   CanActivate,
-  Router,
-  RouterStateSnapshot,
-  UrlTree
+  Router
 } from '@angular/router';
-import { Store } from '@ngrx/store';
 import {
   StorageMap
 } from '@ngx-pwa/local-storage';
+import { ToastrService } from 'ngx-toastr';
 import {
-  map,
-  Observable
+  map
 } from 'rxjs';
-import {
-  AppState
-} from '../store/app.state';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserGuard implements CanActivate {
-  constructor(private store: Store < AppState > , private router: Router, private storage: StorageMap) {}
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable < boolean | UrlTree > | Promise < boolean | UrlTree > | boolean | UrlTree {
-    return this.storage.get('isAdmin').pipe(map(res => {
-      if (!res) {
-        return true;
-      } else {
-        this.router.navigate(['admin-view']);
-        return false
-      }
-    }))
+  constructor(private router: Router, private storage: StorageMap, private toast: ToastrService) {}
+  canActivate() {
+    return this.storage.get('isAdmin').pipe(
+      map(res => {
+        if (!res) {
+          return true;
+        } else {
+          this.toast.error('Tylko użytkownik może wejść na tę stronę!')
+          this.router.navigate(['admin-view']);
+          return false;
+        }
+      })
+    )
   }
-
 }

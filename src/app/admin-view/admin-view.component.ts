@@ -24,6 +24,6 @@ export class AdminViewComponent {
   }
 
   goToIcecreamList() {
-    this.router.navigate(['icecream-list'], {relativeTo: this.route});
+    this.router.navigate(['icecream-list-admin'], {relativeTo: this.route});
   }
 }

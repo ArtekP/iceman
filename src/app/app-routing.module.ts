@@ -6,6 +6,7 @@ import { AuthGuard } from './auth/auth.guards';
 import { LoginComponent } from './auth/login/login.component';
 import { UserGuard } from './auth/user.guard';
 import { ClientsListComponent } from './clients-list/clients-list.component';
+import { IcecreamListAdminComponent } from './icecream-list-admin/icecream-list-admin.component';
 import { IcecreamListComponent } from './icecream-list/icecream-list.component';
 import { OrderAdminComponent } from './order-admin/order-admin.component';
 import { OrderClientComponent } from './order-client/order-client.component';
@@ -24,7 +25,7 @@ const routes: Routes = [
     {path: 'unit-list', component: UnitListComponent},
     {path: 'clients-list', component: ClientsListComponent},
     {path: 'order-admin', component: OrderAdminComponent},
-    {path: 'icecream-list', component: IcecreamListComponent}
+    {path: 'icecream-list-admin', component: IcecreamListAdminComponent}
   ]},
   {path: '**', component: PageNotFoundComponent,}
 ];

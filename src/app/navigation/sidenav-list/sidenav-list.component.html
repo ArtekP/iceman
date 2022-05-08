@@ -1,31 +1,34 @@
 <mat-nav-list>
   <a *ngIf="!(isAuth$ | async)" mat-list-item routerLink="/login" (click)="onClose()">
     <mat-icon>face</mat-icon>
-    <span class="nav-caption">Logowanie</span>
+    <span class="nav-caption">&nbsp;Logowanie</span>
   </a>
-  <a *ngIf="isAuth$ | async" mat-list-item routerLink="/icecream-list" (click)="onClose()">
-    <mat-icon>face</mat-icon>
-    <span class="nav-caption">Lody</span>
+  <a *ngIf="(isAuth$ | async) && (isAdmin$ | async)" mat-list-item (click)="goToIcecreamListAdmin()">
+    <mat-icon>ac_unit</mat-icon>
+    <span class="nav-caption">&nbsp;Lody</span>
   </a>
-  <a *ngIf="(isAuth$ | async) && (isAdmin$ | async)" mat-list-item routerLink="/clients-list" (click)="onClose()">
-    <mat-icon>face</mat-icon>
-    <span class="nav-caption">Klienci</span>
+  <a *ngIf="(isAuth$ | async) && !(isAdmin$ | async)" mat-list-item (click)="goToIcecreamListUser()">
+    <mat-icon>ac_unit</mat-icon>
+    <span class="nav-caption">&nbsp;Lody</span>
   </a>
-  <a *ngIf="(isAuth$ | async) && (isAdmin$ | async)" mat-list-item routerLink="/unit-list" (click)="onClose()">
-    <mat-icon>face</mat-icon>
-    <span class="nav-caption">Pojemniki</span>
+  <a *ngIf="(isAuth$ | async) && (isAdmin$ | async)" mat-list-item (click)="goToClients()">
+    <mat-icon>people</mat-icon>
+    <span class="nav-caption">&nbsp;Klienci</span>
   </a>
-  <a *ngIf="(isAuth$ | async) && !(isAdmin$ | async)" mat-list-item routerLink="/order-client" (click)="onClose()">
-    <mat-icon>face</mat-icon>
-    <span class="nav-caption">Zamówienia</span>
+  <a *ngIf="(isAuth$ | async) && (isAdmin$ | async)" mat-list-item (click)="goToUnits()">
+    <mat-icon>markunread_mailbox</mat-icon>
+    <span class="nav-caption">&nbsp;Pojemniki</span>
   </a>
-  <a *ngIf="(isAuth$ | async) && (isAdmin$ | async)" mat-list-item routerLink="/order-admin" (click)="onClose()">
-    <mat-icon>face</mat-icon>
-    <span class="nav-caption">Zamówienia</span>
+  <a *ngIf="(isAuth$ | async) && !(isAdmin$ | async)" mat-list-item (click)="goToOrdersUser()">
+    <mat-icon>check</mat-icon>
+    <span class="nav-caption">&nbsp;Zamówienia</span>
   </a>
-  <mat-list-item *ngIf="(isAuth$ | async)">
-    <button mat-icon-button (click)="onLogout()">
-      <mat-icon>logout</mat-icon><span class="nav-caption">Wyloguj się</span>
-    </button>
-  </mat-list-item>
+  <a *ngIf="(isAuth$ | async) && (isAdmin$ | async)" mat-list-item (click)="goToOrdersAdmin()">
+    <mat-icon>check</mat-icon>
+    <span class="nav-caption">&nbsp;Zamówienia</span>
+  </a>
+  <a *ngIf="(isAuth$ | async)" mat-list-item (click)="onLogout()">
+    <mat-icon>logout</mat-icon>
+    <span class="nav-caption">&nbsp;Wyloguj</span>
+  </a>
 </mat-nav-list>
