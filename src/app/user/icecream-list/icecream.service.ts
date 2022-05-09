@@ -21,6 +21,7 @@ import { map } from 'rxjs';
 
 export class IcecreamService {
   public userId!: string;
+  checkIfIcecreamStillExist!: string[];
 
   constructor(
     private firestore: Firestore,
@@ -30,7 +31,8 @@ export class IcecreamService {
   public getIcecreamList() {
     const icecreamRef = collection(this.firestore, 'icecream');
     return (collectionData(icecreamRef, { idField: 'wmwFhLjUICxuRm77VfPf' })).pipe(
-      map(data => data[0]['types'])
+      map(data => data[0]['types']),
+      // tap(data => this.checkIfIcecreamStillExist = data),
     );
   }
 
@@ -55,28 +57,44 @@ export class IcecreamService {
     });
   }
 
-  public addToFavourites(icecream: string) {
-    this.userId = localStorage.getItem('uid')!;
-    const userRef = doc(this.firestore, `users/${this.userId}`);
-
-    getDoc(userRef).then(res => {
-      let docData = res.data()!;
-      if(docData['favourites'].indexOf(icecream) >= 0) {
-        this.toast.info(`Pozycja '${icecream}' już znajduje się na liście ulubionych.`)
-        return;
-      } else {
-        docData['favourites'] = [...docData['favourites'], icecream];
-        setDoc(userRef, docData);
-        this.toast.success(`Dodano lody ${icecream} do ulubionych!`)
-      }
-    });
-  }
 
   public getFavouritesFromDB() {
     this.userId = localStorage.getItem('uid')!;
     const userRef = doc(this.firestore, `users/${this.userId}`);
     return docData(userRef).pipe(
-      map(user => user['favourites'])
-    )
+      map(user => user['favourites']),
+      // filter(fav => this.checkIfIcecreamStillExist.includes(fav)),
+      // tap(data => console.log)
+      )
+    }
+
+    public addToFavourites(icecream: string) {
+      this.userId = localStorage.getItem('uid')!;
+      const userRef = doc(this.firestore, `users/${this.userId}`);
+
+      getDoc(userRef).then(res => {
+        let docData = res.data()!;
+        if(docData['favourites'].indexOf(icecream) >= 0) {
+          this.toast.info(`Pozycja '${icecream}' już znajduje się na liście ulubionych.`)
+          return;
+        } else {
+          docData['favourites'] = [...docData['favourites'], icecream];
+          setDoc(userRef, docData);
+          this.toast.success(`Dodano lody ${icecream} do ulubionych!`)
+        }
+      });
+    }
+
+  public removeFromFav(icecreamName: string) {
+    this.userId = localStorage.getItem('uid')!;
+      const userRef = doc(this.firestore, `users/${this.userId}`);
+
+      getDoc(userRef).then(res => {
+        let docData = res.data()!;
+        let index = docData['favourites'].indexOf(icecreamName);
+        docData['favourites'].splice(index, 1);
+        setDoc(userRef, docData);
+        this.toast.success(`Pozycja ${icecreamName} została usunięta z ulubionych`)
+      })
   }
 }
