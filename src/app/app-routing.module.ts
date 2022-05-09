@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminViewComponent } from './admin-view/admin-view.component';
+import { AdminViewComponent } from './admin/admin-view/admin-view.component';
 import { AdminGuard } from './auth/admin.guard';
 import { AuthGuard } from './auth/auth.guards';
 import { LoginComponent } from './auth/login/login.component';
 import { UserGuard } from './auth/user.guard';
-import { ClientsListComponent } from './clients-list/clients-list.component';
-import { IcecreamListAdminComponent } from './icecream-list-admin/icecream-list-admin.component';
-import { IcecreamListComponent } from './icecream-list/icecream-list.component';
-import { OrderAdminComponent } from './order-admin/order-admin.component';
-import { OrderClientComponent } from './order-client/order-client.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { UnitListComponent } from './unit-list/unit-list.component';
-import { UserViewComponent } from './user-view/user-view.component';
+import { ClientsListComponent } from './admin/clients-list/clients-list.component';
+import { IcecreamListAdminComponent } from './admin/icecream-list-admin/icecream-list-admin.component';
+import { IcecreamListComponent } from './user/icecream-list/icecream-list.component';
+import { OrderAdminComponent } from './admin/order-admin/order-admin.component';
+import { OrderClientComponent } from './user/order-client/order-client.component';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { UnitListComponent } from './admin/unit-list/unit-list.component';
+import { UserViewComponent } from './user/user-view/user-view.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},

@@ -1,0 +1,52 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <h1 class="align-center">Dzisiejsze zamówienia (klienci)</h1>
+  <ng-container *ngIf="orders$ | async as users">
+    <ng-container *ngIf="users.length > 0; else noorders">
+      <ul style="list-style: none; max-width: 40rem">
+        <li *ngFor="let user of users" style="padding-bottom: 0.5rem"><b>{{ user['name'] }}</b> <span
+            *ngFor="let order of user['order']" style="display: block">Lody
+            {{ order.name | lowercase}}, {{ order.unit.name }} ({{ order.unit.capacity }}ml) - {{ order.amount }}szt.;
+          </span></li>
+      </ul>
+    </ng-container>
+  </ng-container>
+</div>
+
+<h1 style="text-align: center;">Tabela zamówionych produktów</h1>
+<ng-container *ngIf="orders$ | async as users">
+  <ng-container *ngIf="users.length > 0; else noorders">
+    <ng-container *ngIf="ordersByIcecreamName$ | async as orders; else noorders">
+      <div class="padding-bottom" fxLayout="column" fxLayoutAlign="center center">
+      <table mat-table [dataSource]="orders" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="client-name">
+          <th mat-header-cell *matHeaderCellDef class="padding"> Produkt </th>
+          <td mat-cell *matCellDef="let order" class="padding"> {{order.name | titlecase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="unit-name">
+          <th mat-header-cell *matHeaderCellDef class="padding"> Nazwa jednostki </th>
+          <td mat-cell *matCellDef="let order" class="padding"> {{order.unit.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="unit-capacity">
+          <th mat-header-cell *matHeaderCellDef class="padding"> Pojemność w ml</th>
+          <td mat-cell *matCellDef="let order" class="padding"> {{ order.unit.capacity }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="order-amount">
+          <th mat-header-cell *matHeaderCellDef class="padding"> Ilość </th>
+          <td mat-cell *matCellDef="let order" class="padding"> {{ order.amount }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #noorders>
+  <p class="align-center padding-bottom">Brak zamówień na dziś.</p>
+</ng-template>

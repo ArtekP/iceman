@@ -1,0 +1,24 @@
+<div fxLayoutAlign="center center">
+  <div class="container padding-bottom" fxLayout="column" fxLayoutAlign="center center">
+    <h1 class="container__title align-center">Lista dostępnych jednostek</h1>
+    <ul *ngIf="containerList$ | async as units; else loading" class="container__list">
+      <li *ngFor="let unit of units; let index = index" fxLayoutAlign="space-between center" class="container__list-item">
+        <div class="container__list-item-div" mat-list-item>
+          <span class="flex-item">{{ unit.name }}</span>
+          <span class="container__list-item-span flex-item">&nbsp;&nbsp;(pojemność:
+            {{unit.capacity}}ml)</span>
+        </div>
+        <button class="flex-item container__list-item-button" mat-fab color="warn" (click)="onDelete(unit.name)" title="Usuń daną jednostkę z listy">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </li>
+    </ul>
+    <button mat-raised-button color="primary" class="container__button" (click)="openDialog()" fxLayoutAlign="center center">
+      <mat-icon>add</mat-icon>
+      Dodaj nowy pojemnik
+    </button>
+    <ng-template #loading>
+      <mat-spinner class="scale"></mat-spinner>
+    </ng-template>
+  </div>
+</div>

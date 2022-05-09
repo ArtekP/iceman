@@ -18,7 +18,7 @@ import {
 } from "firebase/auth";
 import {
   User
-} from "./user.model";
+} from "../shared/models/user.model";
 import {
   doc,
   Firestore,
@@ -92,7 +92,7 @@ export class AuthService {
           this.store.dispatch(AuthActions.setAdminTrue());
           this.storage.set('isAdmin', true, {type: 'boolean'}).subscribe(() => {});
           this.router.navigate(['/admin-view']);
-        } 
+        }
         else {
           this.storage.set('isAdmin', false, { type: 'boolean'});
           this.hasOrderedToday();
