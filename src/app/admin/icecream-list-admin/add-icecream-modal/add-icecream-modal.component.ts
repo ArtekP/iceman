@@ -5,17 +5,17 @@ import { IcecreamService } from '../../../user/icecream-list/icecream.service';
 @Component({
   selector: 'app-add-icecream-modal',
   templateUrl: './add-icecream-modal.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./add-icecream-modal.component.scss']
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class AddIcecreamModalComponent {
-  form = new FormGroup({
+  public form = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
   })
 
   constructor(private icecreamService: IcecreamService) { }
 
-  onSubmit(name: string) {
+  public onSubmit(name: string) {
     this.icecreamService.addIcecream(name);
   }
 }

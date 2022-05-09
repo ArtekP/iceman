@@ -18,14 +18,14 @@ import {
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  form = new FormGroup({
+  public form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   })
 
   constructor(private authService: AuthService) {}
 
-  getErrorMessage(val: string) {
+  public getErrorMessage(val: string) {
     if (val === 'email' && this.form.controls['email'].touched && this.form.controls['email'].value.length === 0) {
       return 'Pole nie może być puste';
     }
@@ -41,7 +41,7 @@ export class LoginComponent {
     }
   }
 
-  onSubmit() {
+  public onSubmit() {
     this.authService.signIn(this.form.controls['email'].value, this.form.controls['password'].value);
   }
 }

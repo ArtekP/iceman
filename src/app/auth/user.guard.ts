@@ -16,6 +16,7 @@ import {
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserGuard implements CanActivate {
   constructor(private router: Router, private storage: StorageMap, private toast: ToastrService) {}
   canActivate() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { Observable, Subscription } from 'rxjs';
@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   @Output() public sidenavToggle = new EventEmitter<void>();
-  isAuth$!: Observable<boolean>;
+  public isAuth$!: Observable<boolean>;
   private authSubscription!: Subscription;
 
   constructor(
@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private storage: StorageMap,) { }
 
   public ngOnInit() {
-    // this.isAuth$ = this.store.select(state => state.auth.isAuth);
     this.isAuth$ = this.storage.watch('isAuth') as Observable<boolean>;
   }
 
@@ -29,13 +28,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.sidenavToggle.emit();
   }
 
-  onLogout() {
+  public onLogout() {
     this.authService.logout().subscribe(() => {
       this.router.navigate(['/login']);
     });
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.authSubscription.unsubscribe();
   }
 }

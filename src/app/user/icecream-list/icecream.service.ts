@@ -6,7 +6,6 @@ import {
   collectionData,
   doc,
   docData,
-  DocumentData,
   Firestore,
   getDoc,
   setDoc
@@ -14,25 +13,28 @@ import {
 import {
   ToastrService
 } from 'ngx-toastr';
-import { map, Observable } from 'rxjs';
-import { User } from '../../shared/models/user.model';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class IcecreamService {
-  userId!: string;
+  public userId!: string;
 
-  constructor(private firestore: Firestore, private toast: ToastrService) {}
+  constructor(
+    private firestore: Firestore,
+    private toast: ToastrService
+  ) {}
 
-  getIcecreamList() {
+  public getIcecreamList() {
     const icecreamRef = collection(this.firestore, 'icecream');
     return (collectionData(icecreamRef, { idField: 'wmwFhLjUICxuRm77VfPf' })).pipe(
       map(data => data[0]['types'])
     );
   }
 
-  addIcecream(newIcecream: string) {
+  public addIcecream(newIcecream: string) {
     const docRef = doc(this.firestore, 'icecream/wmwFhLjUICxuRm77VfPf');
     getDoc(docRef).then(res => {
       let docData = res.data()!;
@@ -42,7 +44,7 @@ export class IcecreamService {
     });
   }
 
-  deleteIcecream(icecream: string) {
+  public deleteIcecream(icecream: string) {
     const docRef = doc(this.firestore, 'icecream/wmwFhLjUICxuRm77VfPf');
     getDoc(docRef).then(res => {
       let docData = res.data()!;
@@ -53,7 +55,7 @@ export class IcecreamService {
     });
   }
 
-  addToFavourites(icecream: string) {
+  public addToFavourites(icecream: string) {
     this.userId = localStorage.getItem('uid')!;
     const userRef = doc(this.firestore, `users/${this.userId}`);
 
@@ -70,11 +72,11 @@ export class IcecreamService {
     });
   }
 
-  getFavouritesFromDB() {
+  public getFavouritesFromDB() {
     this.userId = localStorage.getItem('uid')!;
     const userRef = doc(this.firestore, `users/${this.userId}`);
     return docData(userRef).pipe(
       map(user => user['favourites'])
-      )
+    )
   }
 }

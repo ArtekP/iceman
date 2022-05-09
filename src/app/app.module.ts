@@ -35,6 +35,7 @@ import { orderReducer } from './store/order';
 import { OrderAdminComponent } from './admin/order-admin/order-admin.component';
 import { IcecreamListAdminComponent } from './admin/icecream-list-admin/icecream-list-admin.component';
 import { ReactiveComponentModule } from '@ngrx/component';
+
 @NgModule({
   declarations: [
     AppComponent,

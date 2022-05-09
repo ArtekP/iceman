@@ -1,6 +1,6 @@
 <div class="container padding-bottom" fxLayout="column" fxLayoutAlign="center center">
   <ng-container *ngrxLet="hasOrderedToday$ as hasOrderedToday">
-    <h1 style="text-align: center">
+    <h1 class="align-center">
       {{ hasOrderedToday ? 'Zamówienie zostało przyjęte. Zapraszamy jutro!' : 'Obecne zamówienie:'}}</h1>
     <ng-container *ngrxLet="order$ as order">
       <p *ngIf="!hasOrderedToday && order.length == 0">Brak produktów dodanych do zamówienia</p>

@@ -10,34 +10,38 @@ import { OrderService } from './order.service';
 @Component({
   selector: 'app-order-client',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './order-client.component.html',
-  styleUrls: ['./order-client.component.scss']
+  templateUrl: './order-client.component.html'
 })
+
 export class OrderClientComponent implements OnInit {
-  order$!: Observable<Order[]>;
-  hasOrderedToday$!: Observable<boolean>;
-  hasEverOrdered$!: Observable<boolean>;
+  public order$!: Observable<Order[]>;
+  public hasOrderedToday$!: Observable<boolean>;
+  public hasEverOrdered$!: Observable<boolean>;
 
-  constructor(private orderService: OrderService, private store: Store<AppState>, private storage: StorageMap) { }
+  constructor(
+    private orderService: OrderService,
+    private store: Store<AppState>,
+    private storage: StorageMap
+  ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getOrderList();
     this.hasOrderedToday$ = this.storage.watch('hasOrderedToday') as Observable<boolean>;
     this.hasEverOrdered$ = this.storage.watch('hasEverOrdered') as Observable<boolean>;
   }
 
-  getOrderList() {
+  public getOrderList() {
     this.order$ = of(this.orderService.orders);
   }
 
-  onSubmit() {
+  public onSubmit() {
     this.orderService.sendOrderToDB();
     this.order$ = of([]);
     this.store.dispatch(OrderActions.setHasOrderedTodayTrue())
     this.storage.set('hasOrderedToday', true).subscribe(() => {});
   }
 
-  onRepeatLastOrder() {
+  public onRepeatLastOrder() {
     this.orderService.repeatLastOrder();
   }
 }

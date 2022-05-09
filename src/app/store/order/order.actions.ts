@@ -1,4 +1,4 @@
-import { createAction, props } from "@ngrx/store";
+import { createAction } from "@ngrx/store";
 
 export const OrderActions = {
     setHasOrderedTodayTrue: createAction('[Order] Set has ordered today on TRUE'),

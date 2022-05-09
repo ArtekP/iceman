@@ -15,11 +15,12 @@ import { AppState } from '../../store/app.state';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./user-view.component.scss']
 })
+
 export class UserViewComponent implements OnInit {
-  userId!: string;
-  userName$ = new Subject<string>();
-  hasOrderedToday$!: Observable<boolean>;
-  hasEverOrdered$!: Observable<boolean>;
+  private userId!: string;
+  public userName$ = new Subject<string>();
+  public hasOrderedToday$!: Observable<boolean>;
+  public hasEverOrdered$!: Observable<boolean>;
 
   constructor(
     private scroller: ViewportScroller,
@@ -28,16 +29,16 @@ export class UserViewComponent implements OnInit {
     private router: Router,
     private store: Store<AppState>,
     private firestore: Firestore,
-    private storage: StorageMap) { }
+    private storage: StorageMap
+  ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getUserName();
     this.hasEverOrdered$ = this.store.select(state => state.order.hasEverOrdered);
-    // this.hasOrderedToday$ = this.store.select(state => state.order.hasOrderedToday);
     this.hasOrderedToday$ = this.storage.watch('hasOrderedToday') as Observable<boolean>;
   }
 
-  getUserName() {
+  public getUserName() {
     this.userId = localStorage.getItem('uid')!;
     const userRef = doc(this.firestore, `users/${this.userId}`);
     getDoc(userRef).then(res => {
@@ -46,25 +47,17 @@ export class UserViewComponent implements OnInit {
     });
   }
 
-  goToIcecreamList() {
+  public goToIcecreamList() {
     this.router.navigate(['icecream-list'], {relativeTo: this.route})
-        this.scroller.scrollToAnchor("target");
+    this.scroller.scrollToAnchor("target");
   }
 
-  goToOrders() {
+  public goToOrders() {
     this.router.navigate(['order-client'], {relativeTo: this.route})
-        this.scroller.scrollToAnchor("target");
+    this.scroller.scrollToAnchor("target");
   }
 
-  onIcecreamListClick() {
-    this.router.navigate(['/icecream-list'])
-  }
-
-  onOrderListClick() {
-    this.router.navigate(['/order-client'])
-  }
-
-  onRepeatLastOrder() {
+  public onRepeatLastOrder() {
     this.orderService.repeatLastOrder();
   }
 }

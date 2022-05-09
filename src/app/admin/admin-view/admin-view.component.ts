@@ -9,26 +9,28 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./admin-view.component.scss']
 })
 export class AdminViewComponent {
+  constructor(
+    private router: Router,
+    private scroller: ViewportScroller,
+    private route: ActivatedRoute) { }
 
-  constructor(private router: Router, private scroller: ViewportScroller, private route: ActivatedRoute) { }
-
-  goToClients() {
+  public goToClients() {
     this.router.navigate(['clients-list'], {relativeTo: this.route});
-        this.scroller.scrollToAnchor("target");
+    this.scroller.scrollToAnchor("target");
   }
 
-  goToUnits() {
+  public goToUnits() {
     this.router.navigate(['unit-list'], {relativeTo: this.route});
-        this.scroller.scrollToAnchor("target");
+    this.scroller.scrollToAnchor("target");
   }
 
-  goToOrders() {
+  public goToOrders() {
     this.router.navigate(['order-admin'], {relativeTo: this.route});
-        this.scroller.scrollToAnchor("target");
+    this.scroller.scrollToAnchor("target");
   }
 
-  goToIcecreamList() {
+  public goToIcecreamList() {
     this.router.navigate(['icecream-list-admin'], {relativeTo: this.route});
-        this.scroller.scrollToAnchor("target");
+    this.scroller.scrollToAnchor("target");
   }
 }

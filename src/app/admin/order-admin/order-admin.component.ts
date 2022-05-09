@@ -29,29 +29,27 @@ import {
   styleUrls: ['./order-admin.component.scss']
 })
 export class OrderAdminComponent implements OnInit {
-  orders$!: Observable < DocumentData[] > ;
-  icecream$!: Observable < DocumentData[] > ;
-  ordersByIcecreamName$!: Observable < DocumentData[] > ;
-
-  displayedColumns: string[] = ['client-name', 'unit-name', 'unit-capacity', 'order-amount'];
-  dataSource = new MatTableDataSource();
-
+  public orders$!: Observable < DocumentData[] > ;
+  public icecream$!: Observable < DocumentData[] > ;
+  public ordersByIcecreamName$!: Observable < DocumentData[] > ;
+  public displayedColumns: string[] = ['client-name', 'unit-name', 'unit-capacity', 'order-amount'];
+  public dataSource = new MatTableDataSource();
 
   constructor(private clientService: ClientService) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.orders$ = this.getOrdersByClient();
     this.ordersByIcecreamName$ = this.getOrdersByIcecreamName();
   }
 
-  getOrdersByClient() {
+  public getOrdersByClient() {
     let formattedTodaysDate = formatDate(new Date(), 'dd/MM/yyyy', 'en-EN');
     return this.clientService.getClientsList().pipe(
       map(data => data.filter(user => user['lastOrderDate'] == formattedTodaysDate))
     )
   }
 
-  getOrdersByIcecreamName() {
+  public getOrdersByIcecreamName() {
     return this.orders$.pipe(
       map(function (users: any) {
         let arr: any = [];

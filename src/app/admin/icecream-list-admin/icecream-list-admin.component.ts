@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { collectionData, Firestore } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
-import { collection, DocumentData } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { IcecreamService } from '../../user/icecream-list/icecream.service';
 import { AddIcecreamModalComponent } from './add-icecream-modal/add-icecream-modal.component';
@@ -13,19 +12,19 @@ import { AddIcecreamModalComponent } from './add-icecream-modal/add-icecream-mod
   styleUrls: ['./icecream-list-admin.component.scss']
 })
 export class IcecreamListAdminComponent implements OnInit {
-  icecreamList$!: Observable<string[]>;
+  public icecreamList$!: Observable<string[]>;
 
-  constructor(private icecreamService: IcecreamService, private dialog: MatDialog, private firestore: Firestore) { }
+  constructor(private icecreamService: IcecreamService, private dialog: MatDialog) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.icecreamList$ = this.icecreamService.getIcecreamList();
   }
 
-  onDelete(icecream: string) {
+  public onDelete(icecream: string) {
     this.icecreamService.deleteIcecream(icecream);
   }
 
-  openDialog() {
+  public openDialog() {
     this.dialog.open(AddIcecreamModalComponent);
   }
 }

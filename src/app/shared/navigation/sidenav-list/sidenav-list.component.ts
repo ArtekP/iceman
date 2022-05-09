@@ -12,58 +12,63 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./sidenav-list.component.scss']
 })
 export class SidenavListComponent implements OnInit {
-  @Output() closeSidenav = new EventEmitter<void>();
-  isAuth$!: Observable<boolean>;
-  isAdmin$!: Observable<boolean>;
+  @Output() public closeSidenav = new EventEmitter<void>();
+  public isAuth$!: Observable<boolean>;
+  public isAdmin$!: Observable<boolean>;
 
-  constructor(private scroller: ViewportScroller, private authService: AuthService, private storage: StorageMap, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private scroller: ViewportScroller,
+    private authService: AuthService,
+    private storage: StorageMap,
+    private router: Router,
+    private route: ActivatedRoute) { }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.isAuth$ = this.storage.watch('isAuth') as Observable<boolean>;
     this.isAdmin$ = this.storage.watch('isAdmin') as Observable<boolean>;
   }
 
-  goToClients() {
+  public goToClients() {
     this.onClose();
     this.router.navigate(['admin-view/clients-list'], {relativeTo: this.route});
     this.scroller.scrollToAnchor("target");
   }
 
-  goToUnits() {
+  public goToUnits() {
     this.onClose();
     this.router.navigate(['admin-view/unit-list'], {relativeTo: this.route});
     this.scroller.scrollToAnchor("target");
   }
 
-  goToOrdersUser() {
+  public goToOrdersUser() {
     this.onClose();
     this.router.navigate(['user-view/order-client'], {relativeTo: this.route});
     this.scroller.scrollToAnchor("target");
   }
 
-  goToOrdersAdmin() {
+  public goToOrdersAdmin() {
     this.onClose();
     this.router.navigate(['admin-view/order-admin'], {relativeTo: this.route});
     this.scroller.scrollToAnchor("target");
   }
 
-  goToIcecreamListAdmin() {
+  public goToIcecreamListAdmin() {
     this.onClose();
     this.router.navigate(['admin-view/icecream-list-admin'], {relativeTo: this.route});
     this.scroller.scrollToAnchor("target");
   }
 
-  goToIcecreamListUser() {
+  public goToIcecreamListUser() {
     this.onClose();
     this.router.navigate(['user-view/icecream-list'], {relativeTo: this.route});
     this.scroller.scrollToAnchor("target");
   }
 
-  onClose() {
+  public onClose() {
     this.closeSidenav.emit();
   }
 
-  onLogout() {
+  public onLogout() {
     this.onClose();
     this.authService.logout().subscribe(() => {
       this.router.navigate(['/login']);

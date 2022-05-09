@@ -5,11 +5,11 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ClientService {
 
+export class ClientService {
   constructor(private firestore: Firestore) { }
 
-  getClientsList() {
+  public getClientsList() {
     const unitRef = collection(this.firestore, 'users');
     return collectionData(unitRef) as Observable < DocumentData[]> ;
   }

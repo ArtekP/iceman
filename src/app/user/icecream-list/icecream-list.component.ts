@@ -1,13 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { collection, collectionData, DocumentData, Firestore } from '@angular/fire/firestore';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Store } from '@ngrx/store';
 import { StorageMap } from '@ngx-pwa/local-storage';
 import { ToastrService } from 'ngx-toastr';
 import { Observable} from 'rxjs';
 import { OrderService } from '../order-client/order.service';
-import { AppState } from '../../store/app.state';
 import { Unit } from '../../shared/models/unit.model';
 import { UnitService } from '../../admin/unit-list/unit.service';
 import { IcecreamService } from './icecream.service';
@@ -18,28 +15,27 @@ import { IcecreamService } from './icecream.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./icecream-list.component.scss']
 })
-export class IcecreamListComponent implements OnInit {
-  icecreamList$!: Observable<string[]>;
-  favourites$!: Observable<string[]>;
-  selectedValue!: string;
-  hasOrderedToday$!: Observable<boolean>;
-  unitList$!: Observable<Unit[]>;
 
-  formFav = new FormGroup({
+export class IcecreamListComponent implements OnInit {
+  public icecreamList$!: Observable<string[]>;
+  public favourites$!: Observable<string[]>;
+  public selectedValue!: string;
+  public hasOrderedToday$!: Observable<boolean>;
+  public unitList$!: Observable<Unit[]>;
+
+  public formFav = new FormGroup({
     name: new FormControl(''),
     capacity: new FormControl(),
     amount: new FormControl(0)
   })
 
-  form = new FormGroup({
+  public form = new FormGroup({
     name: new FormControl(''),
     capacity: new FormControl(),
     amount: new FormControl(0)
   })
 
   constructor(
-    private store: Store<AppState>,
-    private firestore: Firestore,
     private cdr: ChangeDetectorRef,
     private storage: StorageMap,
     public dialog: MatDialog,
@@ -49,8 +45,7 @@ export class IcecreamListComponent implements OnInit {
     private toast: ToastrService)
   {}
 
-
-  ngOnInit(): void {
+  public ngOnInit() {
     this.icecreamList$ = this.icecreamService.getIcecreamList();
     this.unitList$ = this.unitService.getUnitList();
     this.favourites$ = this.icecreamService.getFavouritesFromDB();
@@ -58,7 +53,7 @@ export class IcecreamListComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  onAddToOrder(name: string, unit: Unit, amount: number) {
+  public onAddToOrder(name: string, unit: Unit, amount: number) {
     if(unit.name == '' || amount === 0) {
       this.toast.error('Wybierz jednostkę z listy oraz podaj ilość!');
       return
@@ -68,7 +63,7 @@ export class IcecreamListComponent implements OnInit {
     }
   }
 
-  onAddToFavourites(icecream: string) {
+  public onAddToFavourites(icecream: string) {
     this.icecreamService.addToFavourites(icecream);
   }
 }

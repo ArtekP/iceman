@@ -25,10 +25,9 @@ import {
 })
 
 export class UnitService {
-
   constructor(private toast: ToastrService, private firestore: Firestore) {}
 
-  getUnitList() {
+  public getUnitList() {
     const unitRef = collection(this.firestore, 'units');
     return (collectionData(unitRef, {
       idField: 'LpGsBGjbLxaLJqmL698E'
@@ -42,7 +41,7 @@ export class UnitService {
     ) as Observable < Unit[] > ;
   }
 
-  addUnit(newUnit: Unit) {
+  public addUnit(newUnit: Unit) {
     const docRef = doc(this.firestore, 'units/LpGsBGjbLxaLJqmL698E');
     getDoc(docRef).then(res => {
       let docData = res.data() !;
@@ -57,7 +56,7 @@ export class UnitService {
     });
   }
 
-  deleteUnit(unitName: string) {
+  public deleteUnit(unitName: string) {
     const docRef = doc(this.firestore, 'units/LpGsBGjbLxaLJqmL698E');
     getDoc(docRef).then(res => {
       let docData = res.data()!;

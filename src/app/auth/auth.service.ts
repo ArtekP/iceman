@@ -44,9 +44,9 @@ import { StorageMap } from "@ngx-pwa/local-storage";
 @Injectable()
 
 export class AuthService {
-  userId!: string;
-  authChange = new Subject < boolean > ();
-  newUser$!: Observable < User > ;
+  public userId!: string;
+  public authChange = new Subject < boolean > ();
+  public newUser$!: Observable < User > ;
 
   constructor(
     private router: Router,
@@ -58,7 +58,7 @@ export class AuthService {
     private storage: StorageMap
   ) {}
 
-  registerUser(newUser: User) {
+  public registerUser(newUser: User) {
     this.createNewUserInDB(newUser).subscribe({
       next: (data) => {
         setDoc(doc(this.firestore, 'users', data.user.uid), newUser);
@@ -70,11 +70,11 @@ export class AuthService {
     });
   }
 
-  createNewUserInDB(newUser: User) {
+  private createNewUserInDB(newUser: User) {
     return from(createUserWithEmailAndPassword(this.fireAuth, newUser.email, newUser.password))
   }
 
-  signIn(email: string, password: string) {
+  public signIn(email: string, password: string) {
     this.login(email, password).subscribe({
       next: (res) => {
         this.store.dispatch(AuthActions.setAuthenticated());
@@ -107,7 +107,7 @@ export class AuthService {
     });
   }
 
-  hasOrderedToday() {
+  public hasOrderedToday() {
     let todaysDate = formatDate(new Date(), 'dd/MM/yyyy', 'en-EN');
     let lastOrderDate: string;
     const userRef = doc(this.firestore, `users/${this.userId}`);
@@ -131,11 +131,11 @@ export class AuthService {
     });
   }
 
-  login(email: string, password: string) {
+  private login(email: string, password: string) {
     return from(signInWithEmailAndPassword(this.fireAuth, email, password));
   }
 
-  logout() {
+  public logout() {
     this.store.dispatch(AuthActions.setUnauthenticated());
     this.store.dispatch(AuthActions.setAdminFalse());
     this.store.dispatch(AuthActions.clearLoggedUserId());

@@ -24,19 +24,25 @@ import {
 @Injectable({
   providedIn: 'root'
 })
+
 export class OrderService {
-  orders: Order[] = [];
-  userId!: string;
-  todaysDate = new Date();
+  public orders: Order[] = [];
+  public userId!: string;
+  public todaysDate = new Date();
 
-  constructor(private storage: StorageMap, private firestore: Firestore, private toast: ToastrService, private store: Store<AppState>) {}
+  constructor(
+    private storage: StorageMap,
+    private firestore: Firestore,
+    private toast: ToastrService,
+    private store: Store<AppState>
+  ) {}
 
-  addToOrders(order: Order) {
+  public addToOrders(order: Order) {
     this.orders.push(order);
     this.toast.info(`Dodano lody ${order.name} do zamówienia`)
   }
 
-  sendOrderToDB() {
+  public sendOrderToDB() {
     let todaysDateFormatted = formatDate(this.todaysDate, 'dd/MM/yyyy', 'en-EN')
     let currentOrder = this.orders;
     this.userId = localStorage.getItem('uid')!;
@@ -50,7 +56,7 @@ export class OrderService {
     this.orders = [];
   }
 
-  repeatLastOrder() {
+  public repeatLastOrder() {
     let todaysDateFormatted = formatDate(this.todaysDate, 'dd/MM/yyyy', 'en-EN')
     this.userId = localStorage.getItem('uid')!;
     const userRef = doc(this.firestore, `users/${this.userId}`);

@@ -24,16 +24,21 @@ import { DocumentData } from 'firebase/firestore';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./clients-list.component.scss']
 })
+
 export class ClientsListComponent implements OnInit {
-  clientsList$!: Observable < DocumentData[] > ;
+  public clientsList$!: Observable < DocumentData[] > ;
 
-  constructor(private authService: AuthService, public dialog: MatDialog, private clientService: ClientService) {}
+  constructor(
+    private authService: AuthService,
+    public dialog: MatDialog,
+    private clientService: ClientService
+  ) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.clientsList$ = this.clientService.getClientsList();
   }
 
-  onAddUser(email: string, password: string) {
+  public onAddUser(email: string, password: string) {
     this.authService.registerUser({
       name: '',
       email: email,
@@ -45,7 +50,7 @@ export class ClientsListComponent implements OnInit {
     });
   }
 
-  openDialog() {
+  public openDialog() {
     this.dialog.open(AddClientModalComponent);
   }
 }

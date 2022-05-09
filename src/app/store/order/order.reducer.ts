@@ -15,28 +15,28 @@ const initialState: OrderState = {
 }
 
 export const orderReducer = createReducer(initialState,
-    on(OrderActions.setHasOrderedTodayFalse, (state) => {
-      return {
-        ...state,
-        hasOrderedToday: false
-      }
-    }),
-    on(OrderActions.setHasOrderedTodayTrue, (state) => {
-      return {
-        ...state,
-        hasOrderedToday: true
-      }
-    }),
-    on(OrderActions.setHasEverOrderedFalse, (state) => {
-        return {
-          ...state,
-          hasEverOrdered: false
-        }
-      }),
-      on(OrderActions.setHasEverOrderedTrue, (state) => {
-        return {
-          ...state,
-          hasEverOrdered: true
-        }
-      })
+  on(OrderActions.setHasOrderedTodayFalse, (state) => {
+    return {
+      ...state,
+      hasOrderedToday: false
+    }
+  }),
+  on(OrderActions.setHasOrderedTodayTrue, (state) => {
+    return {
+      ...state,
+      hasOrderedToday: true
+    }
+  }),
+  on(OrderActions.setHasEverOrderedFalse, (state) => {
+    return {
+      ...state,
+      hasEverOrdered: false
+    }
+  }),
+  on(OrderActions.setHasEverOrderedTrue, (state) => {
+    return {
+      ...state,
+      hasEverOrdered: true
+    }
+  })
 )
