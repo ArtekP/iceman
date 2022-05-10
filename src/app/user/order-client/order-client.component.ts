@@ -34,6 +34,11 @@ export class OrderClientComponent implements OnInit {
     this.order$ = of(this.orderService.orders);
   }
 
+  public clearOrder() {
+    this.orderService.clearOrder();
+    this.order$ = of([]);
+  }
+
   public onSubmit() {
     this.orderService.sendOrderToDB();
     this.order$ = of([]);

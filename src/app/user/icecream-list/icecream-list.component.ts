@@ -72,8 +72,8 @@ export class IcecreamListComponent implements OnInit {
 
   public ngOnInit() {
     this.icecreamList$ = this.icecreamService.getIcecreamList();
-    this.unitList$ = this.unitService.getUnitList();
     this.favourites$ = this.icecreamService.getFavouritesFromDB();
+    this.unitList$ = this.unitService.getUnitList();
     this.hasOrderedToday$ = this.storage.watch('hasOrderedToday') as Observable < boolean > ;
     // this.cdr.detectChanges();
   }

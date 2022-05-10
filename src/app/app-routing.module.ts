@@ -13,10 +13,11 @@ import { OrderClientComponent } from './user/order-client/order-client.component
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { UnitListComponent } from './admin/unit-list/unit-list.component';
 import { UserViewComponent } from './user/user-view/user-view.component';
+import { LoginGuard } from './auth/login.guard';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
-  {path: 'login', component: LoginComponent},
+  {path: 'login', component: LoginComponent, canActivate: [LoginGuard]},
   {path: 'user-view', component: UserViewComponent, canActivate: [AuthGuard, UserGuard], children: [
     {path: 'icecream-list', component: IcecreamListComponent},
     {path: 'order-client', component: OrderClientComponent},

@@ -9,8 +9,12 @@
           {{ item.unit.name }} ({{ item.unit.capacity}}ml)
           {{ item.amount }}szt.</li>
       </ul>
-      <button *ngIf="!(order.length == 0)" type="submit" (click)="onSubmit()" mat-raised-button color="primary"
-        mat-dialog-close>Złóż zamówienie</button>
+      <div fxLayout="row" fxLayoutGap="2rem">
+        <button *ngIf="!(order.length == 0)" type="submit" (click)="onSubmit()" mat-raised-button color="primary"
+          mat-dialog-close>Złóż zamówienie</button>
+        <button *ngIf="!(order.length == 0)" type="submit" (click)="clearOrder()" mat-raised-button color="warn"
+          mat-dialog-close>Wyczyść koszyk</button>
+      </div>
     </ng-container>
   </ng-container>
 </div>

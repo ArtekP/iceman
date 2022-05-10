@@ -42,6 +42,10 @@ export class OrderService {
     this.toast.info(`Dodano lody ${order.name} do zamówienia`)
   }
 
+  public clearOrder() {
+    this.orders = [];
+  }
+
   public sendOrderToDB() {
     let todaysDateFormatted = formatDate(this.todaysDate, 'dd/MM/yyyy', 'en-EN')
     let currentOrder = this.orders;
