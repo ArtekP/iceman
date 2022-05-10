@@ -15,8 +15,6 @@ import { MaterialModule } from '../shared/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveComponentModule } from '@ngrx/component';
 
-
-
 @NgModule({
   declarations: [
     AdminViewComponent,

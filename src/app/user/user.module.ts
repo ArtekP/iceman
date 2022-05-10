@@ -10,9 +10,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveComponentModule } from '@ngrx/component';
 
-
-
-
 @NgModule({
   declarations: [
     OrderClientComponent,

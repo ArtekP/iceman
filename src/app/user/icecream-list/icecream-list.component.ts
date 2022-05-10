@@ -1,14 +1,11 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   OnInit
 } from '@angular/core';
 import {
   FormControl,
   FormGroup,
-  MaxLengthValidator,
-  Validators
 } from '@angular/forms';
 import {
   MatDialog
@@ -62,7 +59,6 @@ export class IcecreamListComponent implements OnInit {
   })
 
   constructor(
-    // private cdr: ChangeDetectorRef,
     private storage: StorageMap,
     public dialog: MatDialog,
     public unitService: UnitService,
@@ -75,7 +71,6 @@ export class IcecreamListComponent implements OnInit {
     this.favourites$ = this.icecreamService.getFavouritesFromDB();
     this.unitList$ = this.unitService.getUnitList();
     this.hasOrderedToday$ = this.storage.watch('hasOrderedToday') as Observable < boolean > ;
-    // this.cdr.detectChanges();
   }
 
   public onAddToOrder(name: string, unit: Unit, amount: number) {

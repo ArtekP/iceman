@@ -63,7 +63,6 @@ export class IcecreamService {
     });
   }
 
-
   public getFavouritesFromDB() {
     const icecreamRef = collection(this.firestore, 'icecream');
     return collectionData(icecreamRef, {

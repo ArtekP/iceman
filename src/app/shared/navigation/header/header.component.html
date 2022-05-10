@@ -1,19 +1,21 @@
-<div style="position: relative"><mat-toolbar fxLayout="row" fxLayoutAlign="flex-start center" color="primary" class="fixed">
-  <div fxHide.gt-xs fxLayoutAlign="flex-start">
-    <button mat-icon-button (click)="onToggleSidenav()">
-      <mat-icon>menu</mat-icon>
-    </button>
-  </div>
-  <div>
-    <a fxLayout="row" fxLayoutAlign="center center">
-      <img style="height: 3rem; margin-left: 1rem" src="assets/images/logo.png">
-    </a>
-  </div>
-  <div fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>
-    <ul fxLayout fxLayoutGap="1rem" class="navigation-items">
-      <li *ngIf="!(isAuth$ | async)"><a routerLink="/login">Logowanie</a></li>
-      <button mat-raised-button *ngIf="isAuth$ | async"><a style="cursor:pointer; color: black" (click)="onLogout()">Wyloguj się</a></button>
-    </ul>
-  </div>
-</mat-toolbar>
+<div style="position: relative">
+  <mat-toolbar fxLayout="row" fxLayoutAlign="flex-start center" color="primary" class="fixed">
+    <div fxHide.gt-xs fxLayoutAlign="flex-start">
+      <button mat-icon-button (click)="onToggleSidenav()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <div>
+      <a fxLayout="row" fxLayoutAlign="center center">
+        <img style="height: 3rem; margin-left: 1rem" src="assets/images/logo.png">
+      </a>
+    </div>
+    <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
+      <ul fxLayout fxLayoutGap="1rem" class="navigation-items">
+        <li *ngIf="!(isAuth$ | async)"><a routerLink="/login">Logowanie</a></li>
+        <button mat-raised-button *ngIf="isAuth$ | async"><a style="cursor:pointer; color: black"
+            (click)="onLogout()">Wyloguj się</a></button>
+      </ul>
+    </div>
+  </mat-toolbar>
 </div>

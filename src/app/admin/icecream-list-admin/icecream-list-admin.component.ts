@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { IcecreamService } from '../../user/icecream-list/icecream.service';
