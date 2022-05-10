@@ -1,8 +1,8 @@
 <ng-container style="max-width: 40rem;">
   <h1 style="text-align: center; margin-bottom: 2rem">Lista ulubionych lodów</h1>
-  <ng-container *ngIf="(favourites$ | async) as favourites">
-    <form *ngIf="favourites.length > 0; else loading2" [formGroup]="formFav" class="align-center" fxLayout="row wrap"
-      fxLayoutAlign="center center">
+  <ng-container *ngIf="(favourites$ | async) as favourites; else loading">
+    <form *ngIf="favourites.length > 0; else nofavourites" [formGroup]="formFav" class="align-center"
+      fxLayout="row wrap" fxLayoutAlign="center center">
       <mat-card *ngFor="let item of favourites; let index = index"
         style="width: 20rem; margin: 1rem; background-color: rgba(128, 128, 128, 0.032); border-radius: 1rem;">
         <mat-card-title><span>&#11088;</span>Lody {{ item | lowercase }}</mat-card-title>
@@ -29,20 +29,19 @@
             (click)="onAddToOrder(item, formFav.controls['capacity'].value, formFav.controls['amount'].value)">Dodaj do
             zamówienia</button>
 
-          <button mat-button color="warn"
-            (click)="onRemoveFromFav(item)">Usuń z ulubionych</button>
+          <button mat-button color="warn" (click)="onRemoveFromFav(item)">Usuń z ulubionych</button>
         </mat-card-actions>
       </mat-card>
     </form>
   </ng-container>
-  <ng-template #loading2>
+  <ng-template #nofavourites>
     <p fxLayoutAlign="center center">Brak ulubionych pozycji.</p>
   </ng-template>
 </ng-container>
 
 <ng-container style="max-width: 40rem;">
   <h1 style="text-align: center; margin-bottom: 2rem">Lista wszystkich lodów</h1>
-  <form *ngIf="icecreamList$ | async as icecream; else loading" [formGroup]="form" class="align-center"
+  <form *ngIf="icecreamList$ | async as icecream; else noicecream" [formGroup]="form" class="align-center"
     fxLayout="row wrap" fxLayoutAlign="center center">
     <mat-card *ngFor="let item of icecream; let index = index"
       style="width: 20rem; margin: 1rem; background-color: rgba(128, 128, 128, 0.032); border-radius: 1rem;">
@@ -71,8 +70,15 @@
       </mat-card-actions>
     </mat-card>
   </form>
-  <ng-template #loading>
-    <p fxLayoutAlign="center center">Brak pozycji na liście lodów. Skontaktuj się z lodziarzem, by ustalić przyczynę.
-    </p>
-  </ng-template>
+
 </ng-container>
+<ng-template #noicecream>
+  <p fxLayoutAlign="center center">Brak pozycji na liście lodów. Skontaktuj się z lodziarzem, by ustalić przyczynę.
+  </p>
+</ng-template>
+
+<ng-template #loading>
+  <div fxLayoutAlign="center center">
+    <mat-spinner class="scale"></mat-spinner>
+  </div>
+</ng-template>

@@ -1,5 +1,5 @@
 <div style="margin: 4rem;"></div>
-<div *ngIf="userName$ | async as userName; else loader" class="user-view padding-bottom" fxLayout="column"
+<div *ngIf="userName$ | async as userName" class="user-view padding-bottom" fxLayout="column"
   fxLayoutAlign="center center">
   <div class="user-view__subheader align-center">
     <h2>Dzień dobry, {{ userName }}.</h2>
@@ -22,9 +22,5 @@
     </a>
   </div>
 </div>
-
-<ng-template #loader style="position: relative">
-  <mat-spinner style="position: absolute; top: 30%; right: 45%"></mat-spinner>
-</ng-template>
 
 <router-outlet id="target"></router-outlet>

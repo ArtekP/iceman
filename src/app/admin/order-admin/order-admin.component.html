@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="center center">
   <h1 class="align-center">Dzisiejsze zamówienia (klienci)</h1>
-  <ng-container *ngIf="orders$ | async as users">
+  <ng-container *ngIf="orders$ | async as users; else loading">
     <ng-container *ngIf="users.length > 0; else noorders">
       <ul style="list-style: none; max-width: 40rem">
         <li *ngFor="let user of users" style="padding-bottom: 0.5rem"><b>{{ user['name'] }}</b> <span
@@ -49,4 +49,10 @@
 
 <ng-template #noorders>
   <p class="align-center padding-bottom">Brak zamówień na dziś.</p>
+</ng-template>
+
+<ng-template #loading>
+  <div fxLayoutAlign="center center">
+    <mat-spinner class="scale"></mat-spinner>
+  </div>
 </ng-template>

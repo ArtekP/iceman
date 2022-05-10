@@ -10,3 +10,10 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+.scale {
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  -o-transform: scale(0.5);
+  transform: scale(0.5);
+}
