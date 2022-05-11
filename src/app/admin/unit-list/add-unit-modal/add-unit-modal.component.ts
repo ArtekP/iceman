@@ -26,8 +26,8 @@ import {
 
 export class AddUnitModalComponent {
   public form = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    capacity: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), ])
+    name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+    capacity: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(100), Validators.max(10000)])
   })
 
   constructor(private unitService: UnitService) {}

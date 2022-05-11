@@ -10,7 +10,7 @@ import { IcecreamService } from '../../../user/icecream-list/icecream.service';
 
 export class AddIcecreamModalComponent {
   public form = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
   })
 
   constructor(private icecreamService: IcecreamService) { }
