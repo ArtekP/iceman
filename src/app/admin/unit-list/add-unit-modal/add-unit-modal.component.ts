@@ -33,7 +33,7 @@ export class AddUnitModalComponent {
   constructor(private unitService: UnitService) {}
 
   public isValidNumber(value: string) {
-    if (value.length == 0) {
+    if (value.length == 0 || value == '0') {
       return false;
     } else if (/^\d+$/.test(value)) {
       return false;
