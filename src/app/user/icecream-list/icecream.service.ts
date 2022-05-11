@@ -46,9 +46,14 @@ export class IcecreamService {
     const docRef = doc(this.firestore, 'icecream/wmwFhLjUICxuRm77VfPf');
     getDoc(docRef).then(res => {
       let docData = res.data() !;
-      docData['types'].push(newIcecream)
-      setDoc(docRef, docData);
-      this.toast.success(`Dodano pozycję o nazwie "${newIcecream}"`)
+      if(!docData['types'].includes(newIcecream.toLocaleLowerCase())) {
+        docData['types'].push(newIcecream)
+        setDoc(docRef, docData);
+        this.toast.success(`Dodano pozycję o nazwie "${newIcecream}"`)
+      } else {
+        this.toast.error('Taka pozycja już jest na liście!')
+        return
+      }
     });
   }
 
