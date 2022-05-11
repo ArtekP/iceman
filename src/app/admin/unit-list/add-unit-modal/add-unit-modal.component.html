@@ -7,7 +7,7 @@
     </mat-form-field>
     <mat-form-field fxLayoutAlign="center" class="example-form-field" appearance="fill">
       <mat-label>Pojemność w mililitrach</mat-label>
-      <mat-hint *ngIf="isValidNumber(form.controls['capacity'].value)" class="hint">*Można wpisać tylko cyfry
+      <mat-hint>*Dozwolone wartości: 1-10000
       </mat-hint>
       <input matInput type="text" formControlName="capacity">
     </mat-form-field>
