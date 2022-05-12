@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
-  Component
+  Component,
+  OnDestroy
 } from '@angular/core';
 import {
   FormControl,
@@ -18,7 +19,7 @@ import {
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   public isLoginBtnClicked = false;
   public isLoginSubscription!: Subscription;
 
@@ -51,7 +52,7 @@ export class LoginComponent {
     this.isLoginSubscription = this.authService.isLoginBtnClicked.subscribe(res => this.isLoginBtnClicked = res);
   }
 
-  public OnDestroy() {
+  public ngOnDestroy() {
     this.isLoginSubscription.unsubscribe();
   }
 }
