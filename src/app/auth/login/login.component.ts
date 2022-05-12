@@ -7,6 +7,7 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import {
   AuthService
 } from '../auth.service';
@@ -19,6 +20,7 @@ import {
 })
 export class LoginComponent {
   public isLoginBtnClicked = false;
+  public isLoginSubscription!: Subscription;
 
   public form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
@@ -46,5 +48,10 @@ export class LoginComponent {
   public onSubmit() {
     this.isLoginBtnClicked = true;
     this.authService.signIn(this.form.controls['email'].value, this.form.controls['password'].value);
+    this.isLoginSubscription = this.authService.isLoginBtnClicked.subscribe(res => this.isLoginBtnClicked = res);
+  }
+
+  public OnDestroy() {
+    this.isLoginSubscription.unsubscribe();
   }
 }

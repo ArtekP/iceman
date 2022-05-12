@@ -47,6 +47,7 @@ export class AuthService {
   public userId!: string;
   public authChange = new Subject < boolean > ();
   public newUser$!: Observable < User > ;
+  public isLoginBtnClicked = new Subject<boolean>();
 
   constructor(
     private router: Router,
@@ -77,6 +78,7 @@ export class AuthService {
   public signIn(email: string, password: string) {
     this.login(email, password).subscribe({
       next: (res) => {
+        this.isLoginBtnClicked.next(true);
         this.store.dispatch(AuthActions.setAuthenticated());
         this.storage.set('isAuth', true, {type: 'boolean'}).subscribe(() => {});
         this.store.dispatch(AuthActions.setLoggedUserId({
@@ -100,6 +102,7 @@ export class AuthService {
         }
       },
       error: () => {
+        this.isLoginBtnClicked.next(false);
         this.toastr.error('Wprowadzono niepoprawne dane', '', {
           timeOut: 3000
         });
